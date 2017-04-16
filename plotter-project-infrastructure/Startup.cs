@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.IO;
 
 namespace plotter_project_infrastructure
 {
@@ -36,6 +37,19 @@ namespace plotter_project_infrastructure
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.Use(async (context, next) => {
+                await next();
+
+                if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value))
+                {
+                    context.Request.Path = "/index.html"; // put your Angular root here
+                    await next();
+                }
+            });
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.UseMvc();
         }
