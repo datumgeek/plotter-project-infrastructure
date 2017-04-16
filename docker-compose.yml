@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  plotter-project-infrastructure:
+    image: plotter-project-infrastructure
+    build:
+      context: ./plotter-project-infrastructure
+      dockerfile: Dockerfile
