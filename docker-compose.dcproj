@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>93fb14f8-d5e8-458d-ad3a-e6525716f9ec</ProjectGuid>
     <DockerLaunchBrowser>True</DockerLaunchBrowser>
-    <DockerServiceUrl>http://localhost:{ServicePort}/api/values</DockerServiceUrl>
+    <DockerServiceUrl>http://localhost:{ServicePort}/</DockerServiceUrl>
     <DockerServiceName>plotter-project-infrastructure</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
