@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.IO;
+using NSwag.AspNetCore;
+using NJsonSchema;
+using System.Reflection;
 
 namespace plotter_project_infrastructure
 {
@@ -52,6 +51,11 @@ namespace plotter_project_infrastructure
             app.UseStaticFiles();
 
             app.UseMvc();
+
+            app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, new SwaggerUiOwinSettings
+            {
+                DefaultPropertyNameHandling = PropertyNameHandling.CamelCase
+            });
         }
     }
 }
