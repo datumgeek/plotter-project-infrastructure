@@ -7,6 +7,11 @@ using System.IO;
 using NSwag.AspNetCore;
 using NJsonSchema;
 using System.Reflection;
+using System.Collections.Generic;
+using Hangfire;
+using Hangfire.Mongo;
+using Hangfire.Console;
+using Hangfire.Dashboard;
 
 namespace plotter_project_infrastructure
 {
@@ -29,6 +34,13 @@ namespace plotter_project_infrastructure
         {
             // Add framework services.
             services.AddMvc();
+
+            // Add hangfire service
+            services.AddHangfire(x =>
+            {
+                x.UseMongoStorage("mongodb://mongo:27017", "MyDatabase");
+                x.UseConsole();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +67,17 @@ namespace plotter_project_infrastructure
             app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, new SwaggerUiOwinSettings
             {
                 DefaultPropertyNameHandling = PropertyNameHandling.CamelCase
+            });
+
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions {
+                Authorization = new List<IDashboardAuthorizationFilter>
+                {
+                    new HangfireDashboardAuthorizationFilter()
+                }
+            });
+            app.UseHangfireServer(new BackgroundJobServerOptions
+            {
+                WorkerCount = 3
             });
         }
     }
