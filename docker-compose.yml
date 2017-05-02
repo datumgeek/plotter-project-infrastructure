@@ -6,8 +6,16 @@ services:
     build:
       context: ./plotter-project-infrastructure
       dockerfile: Dockerfile
-
+    ports:
+      - "32776:80"
   mongo:
     image: mongo
     ports:
       - "27017:27017"
+  corstesterwebapp:
+    image: corstesterwebapp
+    build:
+      context: ./CorsTesterWebApp
+      dockerfile: Dockerfile
+    ports:
+      - "32777:80"

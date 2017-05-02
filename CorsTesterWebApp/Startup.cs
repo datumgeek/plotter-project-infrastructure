@@ -1,19 +1,15 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.IO;
-using NSwag.AspNetCore;
-using NJsonSchema;
-using System.Reflection;
-using System.Collections.Generic;
-using Hangfire;
-using Hangfire.Mongo;
-using Hangfire.Console;
-using Hangfire.Dashboard;
 
-namespace plotter_project_infrastructure
+namespace CorsTesterWebApp
 {
     public class Startup
     {
@@ -34,16 +30,6 @@ namespace plotter_project_infrastructure
         {
             // Add framework services.
             services.AddMvc();
-
-            // Add CORS
-            services.AddCors();
-
-            // Add hangfire service
-            services.AddHangfire(x =>
-            {
-                x.UseMongoStorage("mongodb://mongo:27017", "MyDatabase");
-                x.UseConsole();
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,11 +38,6 @@ namespace plotter_project_infrastructure
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseCors(builder =>
-                builder.AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod());
-
             app.Use(async (context, next) =>
             {
                 await next();
@@ -64,8 +45,7 @@ namespace plotter_project_infrastructure
                 if (context.Response.StatusCode == 404 && 
                     !Path.HasExtension(context.Request.Path.Value))
                 {
-                    context.Request.Path = "/index.html"; // put your Angular root here
-                    await next();
+                    context.Request.Path = "/index.html";
                 }
             });
 
@@ -73,23 +53,6 @@ namespace plotter_project_infrastructure
             app.UseStaticFiles();
 
             app.UseMvc();
-
-            app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, new SwaggerUiOwinSettings
-            {
-                DefaultPropertyNameHandling = PropertyNameHandling.CamelCase
-            });
-
-            app.UseHangfireDashboard("/hangfire", new DashboardOptions
-            {
-                Authorization = new List<IDashboardAuthorizationFilter>
-                {
-                    new HangfireDashboardAuthorizationFilter()
-                }
-            });
-            app.UseHangfireServer(new BackgroundJobServerOptions
-            {
-                WorkerCount = 3
-            });
         }
     }
 }
