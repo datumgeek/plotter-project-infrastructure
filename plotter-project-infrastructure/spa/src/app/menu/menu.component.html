@@ -21,3 +21,13 @@
     </div>
   </div>
 </nav>
+
+<h2>Web API Test</h2>
+<button (click)="runTest()">Run Test</button>
+<h3>Job Results</h3>
+<p *ngFor="let job of jobs">
+  <a 
+     [href]="'/hangfire/jobs/details/' + job" 
+     target="_blank">
+  Hangfire Job #{{ job }}</a>
+</p>

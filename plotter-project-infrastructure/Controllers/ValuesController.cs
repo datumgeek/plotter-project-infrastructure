@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Hangfire;
+using plotter_project_infrastructure.Jobs;
 
 namespace plotter_project_infrastructure.Controllers
 {
@@ -11,6 +13,14 @@ namespace plotter_project_infrastructure.Controllers
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
+        }
+
+        [HttpGet("run-example/{messageCount}")]
+        public string RunExample(int messageCount)
+        {
+            string jobId = BackgroundJob.Enqueue(
+                () => ExampleJob.RunExampleJob(messageCount, null));
+            return jobId;
         }
 
         // GET api/values/5

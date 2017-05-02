@@ -22,6 +22,7 @@ export const API_BASE_URL = new OpaqueToken('API_BASE_URL');
 export interface IValuesClient {
     getAll(): Observable<string[] | null>;
     post(value: string): Observable<void>;
+    runExample(messageCount: number): Observable<string | null>;
     get(id: number): Observable<string | null>;
     put(id: number, value: string): Observable<void>;
     delete(id: number): Observable<void>;
@@ -127,6 +128,54 @@ export class ValuesClient implements IValuesClient {
             return throwException("An unexpected server error occurred.", _status, _responseText);
         }
         return Observable.of<void>(<any>null);
+    }
+
+    runExample(messageCount: number): Observable<string | null> {
+        let url_ = this.baseUrl + "/api/Values/run-example/{messageCount}";
+        if (messageCount === undefined || messageCount === null)
+            throw new Error("The parameter 'messageCount' must be defined.");
+        url_ = url_.replace("{messageCount}", encodeURIComponent("" + messageCount)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = "";
+        
+        let options_ = {
+            body: content_,
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8", 
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return this.http.request(url_, options_).map((_response) => {
+            return this.processRunExample(_response);
+        }).catch((_response: any) => {
+            if (_response instanceof Response) {
+                try {
+                    return this.processRunExample(_response);
+                } catch (e) {
+                    return <Observable<string>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<string>><any>Observable.throw(_response);
+        });
+    }
+
+    protected processRunExample(_response: Response): Observable<string | null> {
+        const _status = _response.status; 
+
+        if (_status === 200) {
+            const _responseText = _response.text();
+            let result200: string | null = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return Observable.of(result200);
+        } else if (_status !== 200 && _status !== 204) {
+            const _responseText = _response.text();
+            return throwException("An unexpected server error occurred.", _status, _responseText);
+        }
+        return Observable.of<string | null>(<any>null);
     }
 
     get(id: number): Observable<string | null> {

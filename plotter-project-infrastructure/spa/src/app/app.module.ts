@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
+import { ValuesClient } from './api-client';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -21,7 +22,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         AppRoutingModule,
         NgbModule.forRoot()
     ],
-    providers: [],
+    providers: [ValuesClient],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
