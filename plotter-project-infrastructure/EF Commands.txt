@@ -1,0 +1,22 @@
+﻿dotnet ef dbcontext scaffold "Server=localhost\SQLEXPRESS; Database=NORTHWND; Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -o NorthwndDomain  -c NorthwndContext -t Suppliers -t Products
+
+dotnet ef dbcontext scaffold 
+	"Server=localhost\SQLEXPRESS; Database=NORTHWND; Trusted_Connection=True;" 
+	Microsoft.EntityFrameworkCore.SqlServer 
+	-o NorthwndDomain  
+	-c NorthwndContext 
+	-t Suppliers 
+	-t Products
+
+------------------------------------------------
+
+dotnet ef migrations add Init -c plotter_project_infrastructure.StatsDomain.StatsContext -o StatsDomain/Migrations
+dotnet ef database update -c plotter_project_infrastructure.StatsDomain.StatsContext
+
+dotnet ef migrations add Init 
+	-c plotter_project_infrastructure.StatsDomain.StatsContext 
+	-o StatsDomain/Migrations
+
+dotnet ef database update 
+	-c plotter_project_infrastructure.StatsDomain.StatsContext
+
