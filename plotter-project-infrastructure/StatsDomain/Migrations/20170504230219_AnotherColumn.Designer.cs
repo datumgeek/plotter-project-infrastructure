@@ -8,9 +8,10 @@ using plotter_project_infrastructure.StatsDomain;
 namespace plotterprojectinfrastructure.StatsDomain.Migrations
 {
     [DbContext(typeof(StatsContext))]
-    partial class StatsContextModelSnapshot : ModelSnapshot
+    [Migration("20170504230219_AnotherColumn")]
+    partial class AnotherColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
