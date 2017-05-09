@@ -19,3 +19,15 @@ services:
       dockerfile: Dockerfile
     ports:
       - "32777:80"
+  sqlnorth:
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Yukon900
+    image: sqlnorth
+    labels:
+      com.microsoft.visualstudio.targetoperatingsystem: linux
+    build:
+      context: ./plotter-project-infrastructure/NorthwndDockerContainer
+      dockerfile: Dockerfile
+    ports:
+      - "1435:1433"
