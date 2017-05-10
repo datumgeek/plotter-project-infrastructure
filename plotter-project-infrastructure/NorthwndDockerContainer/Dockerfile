@@ -11,6 +11,8 @@ COPY . /usr/src/app
 RUN apt-get update && apt-get install -y dos2unix
 RUN dos2unix entrypoint.sh
 RUN dos2unix import-data.sh
+RUN dos2unix Products.csv
+RUN dos2unix setup.sql
 
 # grant permission for the import data script to be executable
 RUN chmod +x /usr/src/app/import-data.sh

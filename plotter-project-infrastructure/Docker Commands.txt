@@ -1,0 +1,4 @@
+﻿cd /c/a/p/plotter-project-infrastructure/plotter-project-infrastructure
+docker build -t sqlnorthx NorthwndDockerContainer
+docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Yukon900' -p 1444:1433 -d sqlnorthx
+docker logs -f <container id>
