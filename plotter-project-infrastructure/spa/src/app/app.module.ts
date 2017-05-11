@@ -9,11 +9,13 @@ import { MenuComponent } from './menu/menu.component';
 import { ValuesClient } from './api-client';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SuppliersListComponent } from './suppliers-list/suppliers-list.component';
 
 @NgModule({
     declarations: [
         AppComponent,
-        MenuComponent
+        MenuComponent,
+        SuppliersListComponent
     ],
     imports: [
         BrowserModule,
