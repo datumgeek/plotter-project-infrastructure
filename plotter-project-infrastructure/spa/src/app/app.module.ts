@@ -6,7 +6,7 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
-import { ValuesClient } from './api-client';
+import { ValuesClient, SuppliersClient } from './api-client';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SuppliersListComponent } from './suppliers-list/suppliers-list.component';
@@ -24,7 +24,7 @@ import { SuppliersListComponent } from './suppliers-list/suppliers-list.componen
         AppRoutingModule,
         NgbModule.forRoot()
     ],
-    providers: [ValuesClient],
+    providers: [ValuesClient, SuppliersClient],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

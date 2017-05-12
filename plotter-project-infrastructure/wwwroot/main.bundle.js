@@ -23,7 +23,10 @@ webpackJsonp([1,4],{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__angular_http__ = __webpack_require__(86);
 /* unused harmony export API_BASE_URL */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return SuppliersClient; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ValuesClient; });
+/* unused harmony export Suppliers */
+/* unused harmony export Products */
 /* unused harmony export SwaggerException */
 /* tslint:disable */
 //----------------------
@@ -64,6 +67,241 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 
 
 var API_BASE_URL = new __WEBPACK_IMPORTED_MODULE_8__angular_core__["c" /* OpaqueToken */]('API_BASE_URL');
+var SuppliersClient = (function () {
+    function SuppliersClient(http, baseUrl) {
+        this.jsonParseReviver = undefined;
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://localhost:32776";
+    }
+    SuppliersClient.prototype.getAll = function () {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/Suppliers";
+        url_ = url_.replace(/[?&]$/, "");
+        var content_ = "";
+        var options_ = {
+            body: content_,
+            method: "get",
+            headers: new __WEBPACK_IMPORTED_MODULE_9__angular_http__["b" /* Headers */]({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+        return this.http.request(url_, options_).flatMap(function (response_) {
+            return _this.processGetAll(response_);
+        }).catch(function (response_) {
+            if (response_ instanceof __WEBPACK_IMPORTED_MODULE_9__angular_http__["c" /* Response */]) {
+                try {
+                    return _this.processGetAll(response_);
+                }
+                catch (e) {
+                    return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].throw(e);
+                }
+            }
+            else
+                return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].throw(response_);
+        });
+    };
+    SuppliersClient.prototype.processGetAll = function (response) {
+        var status = response.status;
+        if (status === 200) {
+            var responseText = response.text();
+            var result200 = null;
+            var resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (var _i = 0, resultData200_1 = resultData200; _i < resultData200_1.length; _i++) {
+                    var item = resultData200_1[_i];
+                    result200.push(Suppliers.fromJS(item));
+                }
+            }
+            return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].of(result200);
+        }
+        else if (status !== 200 && status !== 204) {
+            var responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].of(null);
+    };
+    SuppliersClient.prototype.post = function (supplier) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/Suppliers";
+        url_ = url_.replace(/[?&]$/, "");
+        var content_ = JSON.stringify(supplier ? supplier.toJSON() : null);
+        var options_ = {
+            body: content_,
+            method: "post",
+            headers: new __WEBPACK_IMPORTED_MODULE_9__angular_http__["b" /* Headers */]({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+        return this.http.request(url_, options_).flatMap(function (response_) {
+            return _this.processPost(response_);
+        }).catch(function (response_) {
+            if (response_ instanceof __WEBPACK_IMPORTED_MODULE_9__angular_http__["c" /* Response */]) {
+                try {
+                    return _this.processPost(response_);
+                }
+                catch (e) {
+                    return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].throw(e);
+                }
+            }
+            else
+                return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].throw(response_);
+        });
+    };
+    SuppliersClient.prototype.processPost = function (response) {
+        var status = response.status;
+        if (status === 200) {
+            var responseText = response.text();
+            return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].of(null);
+        }
+        else if (status !== 200 && status !== 204) {
+            var responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].of(null);
+    };
+    SuppliersClient.prototype.get = function (id) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/Suppliers/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+        var content_ = "";
+        var options_ = {
+            body: content_,
+            method: "get",
+            headers: new __WEBPACK_IMPORTED_MODULE_9__angular_http__["b" /* Headers */]({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+        return this.http.request(url_, options_).flatMap(function (response_) {
+            return _this.processGet(response_);
+        }).catch(function (response_) {
+            if (response_ instanceof __WEBPACK_IMPORTED_MODULE_9__angular_http__["c" /* Response */]) {
+                try {
+                    return _this.processGet(response_);
+                }
+                catch (e) {
+                    return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].throw(e);
+                }
+            }
+            else
+                return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].throw(response_);
+        });
+    };
+    SuppliersClient.prototype.processGet = function (response) {
+        var status = response.status;
+        if (status === 200) {
+            var responseText = response.text();
+            var result200 = null;
+            var resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            result200 = resultData200 ? Suppliers.fromJS(resultData200) : null;
+            return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].of(result200);
+        }
+        else if (status !== 200 && status !== 204) {
+            var responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].of(null);
+    };
+    SuppliersClient.prototype.put = function (id, supplier) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/Suppliers/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+        var content_ = JSON.stringify(supplier ? supplier.toJSON() : null);
+        var options_ = {
+            body: content_,
+            method: "put",
+            headers: new __WEBPACK_IMPORTED_MODULE_9__angular_http__["b" /* Headers */]({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+        return this.http.request(url_, options_).flatMap(function (response_) {
+            return _this.processPut(response_);
+        }).catch(function (response_) {
+            if (response_ instanceof __WEBPACK_IMPORTED_MODULE_9__angular_http__["c" /* Response */]) {
+                try {
+                    return _this.processPut(response_);
+                }
+                catch (e) {
+                    return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].throw(e);
+                }
+            }
+            else
+                return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].throw(response_);
+        });
+    };
+    SuppliersClient.prototype.processPut = function (response) {
+        var status = response.status;
+        if (status === 200) {
+            var responseText = response.text();
+            return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].of(null);
+        }
+        else if (status !== 200 && status !== 204) {
+            var responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].of(null);
+    };
+    SuppliersClient.prototype.delete = function (id) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/Suppliers/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+        var content_ = "";
+        var options_ = {
+            body: content_,
+            method: "delete",
+            headers: new __WEBPACK_IMPORTED_MODULE_9__angular_http__["b" /* Headers */]({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+        return this.http.request(url_, options_).flatMap(function (response_) {
+            return _this.processDelete(response_);
+        }).catch(function (response_) {
+            if (response_ instanceof __WEBPACK_IMPORTED_MODULE_9__angular_http__["c" /* Response */]) {
+                try {
+                    return _this.processDelete(response_);
+                }
+                catch (e) {
+                    return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].throw(e);
+                }
+            }
+            else
+                return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].throw(response_);
+        });
+    };
+    SuppliersClient.prototype.processDelete = function (response) {
+        var status = response.status;
+        if (status === 200) {
+            var responseText = response.text();
+            return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].of(null);
+        }
+        else if (status !== 200 && status !== 204) {
+            var responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].of(null);
+    };
+    return SuppliersClient;
+}());
+SuppliersClient = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_8__angular_core__["d" /* Injectable */])(),
+    __param(0, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_8__angular_core__["e" /* Inject */])(__WEBPACK_IMPORTED_MODULE_9__angular_http__["d" /* Http */])), __param(1, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_8__angular_core__["f" /* Optional */])()), __param(1, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_8__angular_core__["e" /* Inject */])(API_BASE_URL)),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_9__angular_http__["d" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__angular_http__["d" /* Http */]) === "function" && _a || Object, String])
+], SuppliersClient);
+
 var ValuesClient = (function () {
     function ValuesClient(http, baseUrl) {
         this.jsonParseReviver = undefined;
@@ -106,8 +344,8 @@ var ValuesClient = (function () {
             var resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
             if (resultData200 && resultData200.constructor === Array) {
                 result200 = [];
-                for (var _i = 0, resultData200_1 = resultData200; _i < resultData200_1.length; _i++) {
-                    var item = resultData200_1[_i];
+                for (var _i = 0, resultData200_2 = resultData200; _i < resultData200_2.length; _i++) {
+                    var item = resultData200_2[_i];
                     result200.push(item);
                 }
             }
@@ -342,8 +580,118 @@ var ValuesClient = (function () {
 ValuesClient = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_8__angular_core__["d" /* Injectable */])(),
     __param(0, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_8__angular_core__["e" /* Inject */])(__WEBPACK_IMPORTED_MODULE_9__angular_http__["d" /* Http */])), __param(1, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_8__angular_core__["f" /* Optional */])()), __param(1, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_8__angular_core__["e" /* Inject */])(API_BASE_URL)),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_9__angular_http__["d" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__angular_http__["d" /* Http */]) === "function" && _a || Object, String])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_9__angular_http__["d" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__angular_http__["d" /* Http */]) === "function" && _b || Object, String])
 ], ValuesClient);
+
+var Suppliers = (function () {
+    function Suppliers(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    Suppliers.prototype.init = function (data) {
+        if (data) {
+            this.supplierId = data["supplierId"];
+            this.companyName = data["companyName"];
+            this.contactName = data["contactName"];
+            this.contactTitle = data["contactTitle"];
+            this.address = data["address"];
+            this.city = data["city"];
+            this.region = data["region"];
+            this.postalCode = data["postalCode"];
+            this.country = data["country"];
+            this.phone = data["phone"];
+            this.fax = data["fax"];
+            this.homePage = data["homePage"];
+            if (data["products"] && data["products"].constructor === Array) {
+                this.products = [];
+                for (var _i = 0, _a = data["products"]; _i < _a.length; _i++) {
+                    var item = _a[_i];
+                    this.products.push(Products.fromJS(item));
+                }
+            }
+        }
+    };
+    Suppliers.fromJS = function (data) {
+        var result = new Suppliers();
+        result.init(data);
+        return result;
+    };
+    Suppliers.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        data["supplierId"] = this.supplierId;
+        data["companyName"] = this.companyName;
+        data["contactName"] = this.contactName;
+        data["contactTitle"] = this.contactTitle;
+        data["address"] = this.address;
+        data["city"] = this.city;
+        data["region"] = this.region;
+        data["postalCode"] = this.postalCode;
+        data["country"] = this.country;
+        data["phone"] = this.phone;
+        data["fax"] = this.fax;
+        data["homePage"] = this.homePage;
+        if (this.products && this.products.constructor === Array) {
+            data["products"] = [];
+            for (var _i = 0, _a = this.products; _i < _a.length; _i++) {
+                var item = _a[_i];
+                data["products"].push(item.toJSON());
+            }
+        }
+        return data;
+    };
+    return Suppliers;
+}());
+
+var Products = (function () {
+    function Products(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    Products.prototype.init = function (data) {
+        if (data) {
+            this.productId = data["productId"];
+            this.productName = data["productName"];
+            this.supplierId = data["supplierId"];
+            this.categoryId = data["categoryId"];
+            this.quantityPerUnit = data["quantityPerUnit"];
+            this.unitPrice = data["unitPrice"];
+            this.unitsInStock = data["unitsInStock"];
+            this.unitsOnOrder = data["unitsOnOrder"];
+            this.reorderLevel = data["reorderLevel"];
+            this.discontinued = data["discontinued"];
+            this.supplier = data["supplier"] ? Suppliers.fromJS(data["supplier"]) : undefined;
+        }
+    };
+    Products.fromJS = function (data) {
+        var result = new Products();
+        result.init(data);
+        return result;
+    };
+    Products.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        data["productId"] = this.productId;
+        data["productName"] = this.productName;
+        data["supplierId"] = this.supplierId;
+        data["categoryId"] = this.categoryId;
+        data["quantityPerUnit"] = this.quantityPerUnit;
+        data["unitPrice"] = this.unitPrice;
+        data["unitsInStock"] = this.unitsInStock;
+        data["unitsOnOrder"] = this.unitsOnOrder;
+        data["reorderLevel"] = this.reorderLevel;
+        data["discontinued"] = this.discontinued;
+        data["supplier"] = this.supplier ? this.supplier.toJSON() : undefined;
+        return data;
+    };
+    return Products;
+}());
 
 var SwaggerException = (function (_super) {
     __extends(SwaggerException, _super);
@@ -374,7 +722,7 @@ function blobToText(blob) {
         reader.readAsText(blob);
     });
 }
-var _a;
+var _a, _b;
 //# sourceMappingURL=api-client.js.map
 
 /***/ }),
@@ -384,6 +732,7 @@ var _a;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__api_client__ = __webpack_require__(132);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SuppliersListComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -395,10 +744,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var SuppliersListComponent = (function () {
-    function SuppliersListComponent() {
+    function SuppliersListComponent(suppliersClient) {
+        this.suppliersClient = suppliersClient;
+        this.suppliers = [];
     }
     SuppliersListComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.suppliersClient.getAll()
+            .subscribe(function (suppliers) { _this.suppliers = suppliers; });
     };
     return SuppliersListComponent;
 }());
@@ -408,9 +763,10 @@ SuppliersListComponent = __decorate([
         template: __webpack_require__(238),
         styles: [__webpack_require__(231)]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__api_client__["b" /* SuppliersClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__api_client__["b" /* SuppliersClient */]) === "function" && _a || Object])
 ], SuppliersListComponent);
 
+var _a;
 //# sourceMappingURL=suppliers-list.component.js.map
 
 /***/ }),
@@ -568,7 +924,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_4__app_routing_module__["a" /* AppRoutingModule */],
             __WEBPACK_IMPORTED_MODULE_8__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */].forRoot()
         ],
-        providers: [__WEBPACK_IMPORTED_MODULE_7__api_client__["a" /* ValuesClient */]],
+        providers: [__WEBPACK_IMPORTED_MODULE_7__api_client__["a" /* ValuesClient */], __WEBPACK_IMPORTED_MODULE_7__api_client__["b" /* SuppliersClient */]],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_5__app_component__["a" /* AppComponent */]]
     })
 ], AppModule);
@@ -706,14 +1062,14 @@ module.exports = "<h1>\n  {{title}}\n</h1>\n<ppi-menu></ppi-menu>\n<router-outle
 /***/ 237:
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-toggleable-md navbar-inverse bg-primary\">\r\n  <button class=\"navbar-toggler navbar-toggler-right\" \r\n          type=\"button\" \r\n          (click)=\"isNavbarCollapsed = !isNavbarCollapsed\"\r\n          aria-controls=\"exCollapsingNavbar2\" \r\n          aria-expanded=\"false\" \r\n          aria-label=\"Toggle navigation\">\r\n    <span class=\"navbar-toggler-icon\"></span>\r\n  </button>\r\n  <a class=\"navbar-brand\" routerLink=\"/\" routerLinkActive=\"active\">Plotter App</a>\r\n  <div [ngbCollapse]=\"isNavbarCollapsed\" \r\n       class=\"collapse navbar-collapse\" \r\n       id=\"exCollapsingNavbar2\">\r\n    <div class=\"navbar-nav mr-auto\">\r\n      <a class=\"nav-item nav-link\" \r\n         href=\"/swagger\" \r\n         target=\"_blank\">Web API</a>\r\n      <a class=\"nav-item nav-link\"\r\n         href=\"/hangfire/jobs/enqueued\"\r\n         target=\"_blank\">Jobs</a>\r\n      <a class=\"nav-item nav-link\" \r\n         routerLink=\"/suppliers-list\" \r\n         routerLinkActive=\"active\"\r\n         href=\"/suppliers-list\">\r\n        Suppliers List</a>\r\n    </div>\r\n  </div>\r\n</nav>\r\n\r\n<h2>Web API Test</h2>\r\n<button (click)=\"runTest()\">Run Test</button>\r\n<h3>Job Results</h3>\r\n<p *ngFor=\"let job of jobs\">\r\n  <a \r\n     [href]=\"'/hangfire/jobs/details/' + job\" \r\n     target=\"_blank\">\r\n  Hangfire Job #{{ job }}</a>\r\n</p>\r\n"
+module.exports = "<nav class=\"navbar navbar-toggleable-md navbar-inverse bg-primary\">\r\n  <button class=\"navbar-toggler navbar-toggler-right\" \r\n          type=\"button\" \r\n          (click)=\"isNavbarCollapsed = !isNavbarCollapsed\"\r\n          aria-controls=\"exCollapsingNavbar2\" \r\n          aria-expanded=\"false\" \r\n          aria-label=\"Toggle navigation\">\r\n    <span class=\"navbar-toggler-icon\"></span>\r\n  </button>\r\n  <a class=\"navbar-brand\" \r\n     routerLink=\"/\" \r\n     routerLinkActive=\"active\">Plotter App</a>\r\n  <div [ngbCollapse]=\"isNavbarCollapsed\" \r\n       class=\"collapse navbar-collapse\" \r\n       id=\"exCollapsingNavbar2\">\r\n    <div class=\"navbar-nav mr-auto\">\r\n      <a class=\"nav-item nav-link\" \r\n         href=\"/swagger\" \r\n         target=\"_blank\">Web API</a>\r\n      <a class=\"nav-item nav-link\"\r\n         href=\"/hangfire/jobs/enqueued\"\r\n         target=\"_blank\">Jobs</a>\r\n      <a class=\"nav-item nav-link\" \r\n         routerLink=\"/suppliers-list\" \r\n         routerLinkActive=\"active\"\r\n         href=\"/suppliers-list\">\r\n        Suppliers List</a>\r\n    </div>\r\n  </div>\r\n</nav>\r\n\r\n<h2>Web API Test</h2>\r\n<button (click)=\"runTest()\">Run Test</button>\r\n<h3>Job Results</h3>\r\n<p *ngFor=\"let job of jobs\">\r\n  <a \r\n     [href]=\"'/hangfire/jobs/details/' + job\" \r\n     target=\"_blank\">\r\n  Hangfire Job #{{ job }}</a>\r\n</p>\r\n"
 
 /***/ }),
 
 /***/ 238:
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  suppliers-list works!\n</p>\n"
+module.exports = "<p>\n  suppliers-list works!\n</p>\n<div *ngFor=\"let supplier of suppliers\">\n  {{ supplier.companyName }}\n</div>\n"
 
 /***/ }),
 

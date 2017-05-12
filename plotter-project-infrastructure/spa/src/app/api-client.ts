@@ -19,6 +19,255 @@ import { Http, Headers, ResponseContentType, Response } from '@angular/http';
 
 export const API_BASE_URL = new OpaqueToken('API_BASE_URL');
 
+export interface ISuppliersClient {
+    getAll(): Observable<Suppliers[] | null>;
+    post(supplier: Suppliers): Observable<void>;
+    get(id: number): Observable<Suppliers | null>;
+    put(id: number, supplier: Suppliers): Observable<void>;
+    delete(id: number): Observable<void>;
+}
+
+@Injectable()
+export class SuppliersClient implements ISuppliersClient {
+    private http: Http;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://localhost:32776";
+    }
+
+    getAll(): Observable<Suppliers[] | null> {
+        let url_ = this.baseUrl + "/api/Suppliers";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = "";
+        
+        let options_ = {
+            body: content_,
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8", 
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processGetAll(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGetAll(response_);
+                } catch (e) {
+                    return <Observable<Suppliers[]>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<Suppliers[]>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetAll(response: Response): Observable<Suppliers[] | null> {
+        const status = response.status; 
+
+        if (status === 200) {
+            const responseText = response.text();
+            let result200: Suppliers[] | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(Suppliers.fromJS(item));
+            }
+            return Observable.of(result200);
+        } else if (status !== 200 && status !== 204) {
+            const responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return Observable.of<Suppliers[] | null>(<any>null);
+    }
+
+    post(supplier: Suppliers): Observable<void> {
+        let url_ = this.baseUrl + "/api/Suppliers";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(supplier ? supplier.toJSON() : null);
+        
+        let options_ = {
+            body: content_,
+            method: "post",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8", 
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processPost(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processPost(response_);
+                } catch (e) {
+                    return <Observable<void>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<void>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processPost(response: Response): Observable<void> {
+        const status = response.status; 
+
+        if (status === 200) {
+            const responseText = response.text();
+            return Observable.of<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return Observable.of<void>(<any>null);
+    }
+
+    get(id: number): Observable<Suppliers | null> {
+        let url_ = this.baseUrl + "/api/Suppliers/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = "";
+        
+        let options_ = {
+            body: content_,
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8", 
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processGet(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGet(response_);
+                } catch (e) {
+                    return <Observable<Suppliers>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<Suppliers>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGet(response: Response): Observable<Suppliers | null> {
+        const status = response.status; 
+
+        if (status === 200) {
+            const responseText = response.text();
+            let result200: Suppliers | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            result200 = resultData200 ? Suppliers.fromJS(resultData200) : <any>null;
+            return Observable.of(result200);
+        } else if (status !== 200 && status !== 204) {
+            const responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return Observable.of<Suppliers | null>(<any>null);
+    }
+
+    put(id: number, supplier: Suppliers): Observable<void> {
+        let url_ = this.baseUrl + "/api/Suppliers/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(supplier ? supplier.toJSON() : null);
+        
+        let options_ = {
+            body: content_,
+            method: "put",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8", 
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processPut(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processPut(response_);
+                } catch (e) {
+                    return <Observable<void>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<void>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processPut(response: Response): Observable<void> {
+        const status = response.status; 
+
+        if (status === 200) {
+            const responseText = response.text();
+            return Observable.of<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return Observable.of<void>(<any>null);
+    }
+
+    delete(id: number): Observable<void> {
+        let url_ = this.baseUrl + "/api/Suppliers/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = "";
+        
+        let options_ = {
+            body: content_,
+            method: "delete",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8", 
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processDelete(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processDelete(response_);
+                } catch (e) {
+                    return <Observable<void>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<void>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processDelete(response: Response): Observable<void> {
+        const status = response.status; 
+
+        if (status === 200) {
+            const responseText = response.text();
+            return Observable.of<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return Observable.of<void>(<any>null);
+    }
+}
+
 export interface IValuesClient {
     getAll(): Observable<string[] | null>;
     post(value: string): Observable<void>;
@@ -317,6 +566,171 @@ export class ValuesClient implements IValuesClient {
     }
 }
 
+export class Suppliers implements ISuppliers {
+    supplierId: number;
+    companyName?: string | undefined;
+    contactName?: string | undefined;
+    contactTitle?: string | undefined;
+    address?: string | undefined;
+    city?: string | undefined;
+    region?: string | undefined;
+    postalCode?: string | undefined;
+    country?: string | undefined;
+    phone?: string | undefined;
+    fax?: string | undefined;
+    homePage?: string | undefined;
+    products?: Products[] | undefined;
+
+    constructor(data?: ISuppliers) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.supplierId = data["supplierId"];
+            this.companyName = data["companyName"];
+            this.contactName = data["contactName"];
+            this.contactTitle = data["contactTitle"];
+            this.address = data["address"];
+            this.city = data["city"];
+            this.region = data["region"];
+            this.postalCode = data["postalCode"];
+            this.country = data["country"];
+            this.phone = data["phone"];
+            this.fax = data["fax"];
+            this.homePage = data["homePage"];
+            if (data["products"] && data["products"].constructor === Array) {
+                this.products = [];
+                for (let item of data["products"])
+                    this.products.push(Products.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): Suppliers {
+        let result = new Suppliers();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["supplierId"] = this.supplierId;
+        data["companyName"] = this.companyName;
+        data["contactName"] = this.contactName;
+        data["contactTitle"] = this.contactTitle;
+        data["address"] = this.address;
+        data["city"] = this.city;
+        data["region"] = this.region;
+        data["postalCode"] = this.postalCode;
+        data["country"] = this.country;
+        data["phone"] = this.phone;
+        data["fax"] = this.fax;
+        data["homePage"] = this.homePage;
+        if (this.products && this.products.constructor === Array) {
+            data["products"] = [];
+            for (let item of this.products)
+                data["products"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface ISuppliers {
+    supplierId: number;
+    companyName?: string | undefined;
+    contactName?: string | undefined;
+    contactTitle?: string | undefined;
+    address?: string | undefined;
+    city?: string | undefined;
+    region?: string | undefined;
+    postalCode?: string | undefined;
+    country?: string | undefined;
+    phone?: string | undefined;
+    fax?: string | undefined;
+    homePage?: string | undefined;
+    products?: Products[] | undefined;
+}
+
+export class Products implements IProducts {
+    productId: number;
+    productName?: string | undefined;
+    supplierId?: number | undefined;
+    categoryId?: number | undefined;
+    quantityPerUnit?: string | undefined;
+    unitPrice?: number | undefined;
+    unitsInStock?: number | undefined;
+    unitsOnOrder?: number | undefined;
+    reorderLevel?: number | undefined;
+    discontinued: boolean;
+    supplier?: Suppliers | undefined;
+
+    constructor(data?: IProducts) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.productId = data["productId"];
+            this.productName = data["productName"];
+            this.supplierId = data["supplierId"];
+            this.categoryId = data["categoryId"];
+            this.quantityPerUnit = data["quantityPerUnit"];
+            this.unitPrice = data["unitPrice"];
+            this.unitsInStock = data["unitsInStock"];
+            this.unitsOnOrder = data["unitsOnOrder"];
+            this.reorderLevel = data["reorderLevel"];
+            this.discontinued = data["discontinued"];
+            this.supplier = data["supplier"] ? Suppliers.fromJS(data["supplier"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): Products {
+        let result = new Products();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["productId"] = this.productId;
+        data["productName"] = this.productName;
+        data["supplierId"] = this.supplierId;
+        data["categoryId"] = this.categoryId;
+        data["quantityPerUnit"] = this.quantityPerUnit;
+        data["unitPrice"] = this.unitPrice;
+        data["unitsInStock"] = this.unitsInStock;
+        data["unitsOnOrder"] = this.unitsOnOrder;
+        data["reorderLevel"] = this.reorderLevel;
+        data["discontinued"] = this.discontinued;
+        data["supplier"] = this.supplier ? this.supplier.toJSON() : <any>undefined;
+        return data; 
+    }
+}
+
+export interface IProducts {
+    productId: number;
+    productName?: string | undefined;
+    supplierId?: number | undefined;
+    categoryId?: number | undefined;
+    quantityPerUnit?: string | undefined;
+    unitPrice?: number | undefined;
+    unitsInStock?: number | undefined;
+    unitsOnOrder?: number | undefined;
+    reorderLevel?: number | undefined;
+    discontinued: boolean;
+    supplier?: Suppliers | undefined;
+}
 
 export class SwaggerException extends Error {
     message: string;

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
+import { SuppliersClient, Suppliers } from '../api-client';
 
 @Component({
   selector: 'ppi-suppliers-list',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./suppliers-list.component.less']
 })
 export class SuppliersListComponent implements OnInit {
+    public suppliers: Suppliers[] = [];
 
-  constructor() { }
+  constructor(private suppliersClient: SuppliersClient) { }
 
   ngOnInit() {
+      this.suppliersClient.getAll()
+          .subscribe(suppliers => { this.suppliers = suppliers; });
   }
-
 }
