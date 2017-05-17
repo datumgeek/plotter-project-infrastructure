@@ -35,7 +35,18 @@ cd /c/a/p/plotter-project-infrastructure/plotter-project-infrastructure/DigitalO
 
 --- * make sure we're connected to the digital ocean droplet
 eval $(docker-machine env plotter-droplet)
---- run the compose file
+
+--- * remove any images you want refreshed
+docker images ls
+docker rmi xyz
+
+--- * run the compose file
+docker up -d
+
+--- * test run
+http://159.203.162.38:32776
+
+
 ---------  ----------------------------
 ---------  ----------------------------
 ---------  ----------------------------
