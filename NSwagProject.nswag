@@ -33,6 +33,7 @@
       "generateConstructorInterface": true,
       "importRequiredTypes": true,
       "baseUrlTokenName": "API_BASE_URL",
+      "serviceHost": ".",
       "output": "plotter-project-infrastructure/spa/src/app/api-client.ts"
     }
   }

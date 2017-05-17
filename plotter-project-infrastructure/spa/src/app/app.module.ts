@@ -10,12 +10,14 @@ import { ValuesClient, SuppliersClient } from './api-client';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SuppliersListComponent } from './suppliers-list/suppliers-list.component';
+import { SuppliersGridComponent } from './suppliers-grid/suppliers-grid.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         MenuComponent,
-        SuppliersListComponent
+        SuppliersListComponent,
+        SuppliersGridComponent
     ],
     imports: [
         BrowserModule,

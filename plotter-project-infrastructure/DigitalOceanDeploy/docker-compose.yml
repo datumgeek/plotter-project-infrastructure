@@ -1,0 +1,20 @@
+﻿version: '2'
+
+services:
+  plotter-project-infrastructure:
+    image: datumgeek/plotter-project-infrastructure
+    ports:
+      - "32776:80"
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+  sqlnorth:
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Yukon900
+    image: datumgeek/sqlnorth
+    labels:
+      com.microsoft.visualstudio.targetoperatingsystem: linux
+    ports:
+      - "1435:1433"

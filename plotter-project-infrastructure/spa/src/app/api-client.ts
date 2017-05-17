@@ -35,7 +35,7 @@ export class SuppliersClient implements ISuppliersClient {
 
     constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://localhost:32776";
+        this.baseUrl = baseUrl ? baseUrl : "";
     }
 
     getAll(): Observable<Suppliers[] | null> {
@@ -285,7 +285,7 @@ export class ValuesClient implements IValuesClient {
 
     constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://localhost:32776";
+        this.baseUrl = baseUrl ? baseUrl : "";
     }
 
     getAll(): Observable<string[] | null> {
