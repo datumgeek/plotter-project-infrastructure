@@ -7,8 +7,9 @@ services:
       - "32776:80"
   mongo:
     image: mongo
-    ports:
-      - "27017:27017"
+#    uncomment the lines if you want to connect robo mongo to the mongo instance
+#    ports:
+#      - "27017:27017"
   sqlnorth:
     environment:
       - ACCEPT_EULA=Y
@@ -16,5 +17,6 @@ services:
     image: datumgeek/sqlnorth
     labels:
       com.microsoft.visualstudio.targetoperatingsystem: linux
-    ports:
-      - "1435:1433"
+#    uncomment the lines if you want to connect sql server management studio to the sql server instance
+#    ports:
+#      - "1435:1433"

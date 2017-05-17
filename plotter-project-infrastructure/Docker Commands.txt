@@ -1,4 +1,53 @@
-﻿cd /c/a/p/plotter-project-infrastructure/plotter-project-infrastructure
+﻿--------- test creation of sql server linux container ----------------------------
+cd /c/a/p/plotter-project-infrastructure/plotter-project-infrastructure
 docker build -t sqlnorthx NorthwndDockerContainer
 docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Yukon900' -p 1444:1433 -d sqlnorthx
 docker logs -f <container id>
+
+--------- publish containers ----------------------------
+--- * make sure we're connected to the local docker for windows vm
+eval $(docker-machine env -u)
+
+--- * inspect the local images and remove the ones we want to publish so they get rebuilt
+docker image ls
+
+--- * see if the container is running
+docker ps
+
+--- * stop the container if necessary
+docker stop 3cf
+
+--- * remove the container if necessary
+docker rm 3cf
+
+--- * remove the image
+docker rmi xyz
+
+--- * run the solution in visual studio in "release" mode
+--- * tag the docker image to prep for publish to docker hub
+docker tag plotter-project-infrastructure datumgeek/plotter-project-infrastructure
+
+--- * publish the image to docker hub
+docker push datumgeek/plotter-project-infrastructure
+
+--- * change to the DigitalOceanDeploy folder
+cd /c/a/p/plotter-project-infrastructure/plotter-project-infrastructure/DigitalOceanDeploy
+
+--- * make sure we're connected to the digital ocean droplet
+eval $(docker-machine env plotter-droplet)
+--- run the compose file
+---------  ----------------------------
+---------  ----------------------------
+---------  ----------------------------
+---------  ----------------------------
+---------  ----------------------------
+---------  ----------------------------
+---------  ----------------------------
+---------  ----------------------------
+---------  ----------------------------
+---------  ----------------------------
+---------  ----------------------------
+---------  ----------------------------
+---------  ----------------------------
+---------  ----------------------------
+---------  ----------------------------

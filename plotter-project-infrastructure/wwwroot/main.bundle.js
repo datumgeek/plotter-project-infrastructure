@@ -275,7 +275,7 @@ var MenuComponent = (function () {
         var _this = this;
         this.valuesClient.runExample(5)
             .subscribe(function (job) {
-            _this.jobs[_this.jobs.length] = job.value;
+            _this.jobs.push(job);
         });
     };
     MenuComponent.prototype.ngOnInit = function () {
@@ -492,7 +492,7 @@ var SuppliersClient = (function () {
     function SuppliersClient(http, baseUrl) {
         this.jsonParseReviver = undefined;
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://localhost:32776";
+        this.baseUrl = baseUrl ? baseUrl : "";
     }
     SuppliersClient.prototype.getAll = function () {
         var _this = this;
@@ -727,7 +727,7 @@ var ValuesClient = (function () {
     function ValuesClient(http, baseUrl) {
         this.jsonParseReviver = undefined;
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://localhost:32776";
+        this.baseUrl = baseUrl ? baseUrl : "";
     }
     ValuesClient.prototype.getAll = function () {
         var _this = this;

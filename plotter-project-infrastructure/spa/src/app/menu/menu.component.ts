@@ -15,7 +15,7 @@ export class MenuComponent implements OnInit {
     runTest() {
         this.valuesClient.runExample(5)
             .subscribe(job => {
-                this.jobs[this.jobs.length] = (<any>job).value;
+                this.jobs.push(job);
             });
     }
 
