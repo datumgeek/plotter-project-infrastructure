@@ -26,6 +26,23 @@ namespace plotter_project_infrastructure.Controllers
             }
         }
 
+        // GET api/suppliers
+        [HttpGet("ag-grid-page")]
+        public IEnumerable<Suppliers> GetAgGridPage(string sort, string filter, int take, int skip)
+        {
+            try
+            {
+                var northwndContext = new NorthwndContext();
+                var list = northwndContext.Suppliers.OrderBy(s => s.CompanyName).ToList();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                var ex2 = ex;
+                return new List<Suppliers>();
+            }
+        }
+
         // GET api/suppliers/5
         [HttpGet("{id}")]
         public Suppliers Get(int id)

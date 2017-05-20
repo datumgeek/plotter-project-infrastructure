@@ -30,6 +30,9 @@ docker tag plotter-project-infrastructure datumgeek/plotter-project-infrastructu
 --- * publish the image to docker hub
 docker push datumgeek/plotter-project-infrastructure
 
+--- * view the image on docker hub
+https://hub.docker.com/r/datumgeek/plotter-project-infrastructure/
+
 --- * change to the DigitalOceanDeploy folder
 cd /c/a/p/plotter-project-infrastructure/plotter-project-infrastructure/DigitalOceanDeploy
 

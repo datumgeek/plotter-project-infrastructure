@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'ppi-suppliers-grid',
-  templateUrl: './suppliers-grid.component.html',
-  styleUrls: ['./suppliers-grid.component.less']
+    selector: 'ppi-suppliers-grid',
+    templateUrl: './suppliers-grid.component.html',
+    styleUrls: ['./suppliers-grid.component.less']
 })
 export class SuppliersGridComponent implements OnInit {
 
-  constructor() { }
+    constructor() { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
 }
