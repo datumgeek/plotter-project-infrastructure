@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using plotter_project_infrastructure.NorthwndDomain;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,11 @@ namespace plotter_project_infrastructure.Controllers
             try
             {
                 var northwndContext = new NorthwndContext();
-                var list = northwndContext.Suppliers.OrderBy(s => s.CompanyName)
-                    //.Take(5)
+                var list = northwndContext.Suppliers
+                    .OrderBy(s => s.CompanyName)
+                    .Take(5)
+                    .Include(supplier => supplier.Products)
+                    .AsNoTracking()
                     .ToList()
                     ;
                 return list;

@@ -33,7 +33,11 @@ namespace plotter_project_infrastructure
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(options => {
+                    options.SerializerSettings.ReferenceLoopHandling =
+                        Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                }); ;
 
             // Add CORS
             services.AddCors();
