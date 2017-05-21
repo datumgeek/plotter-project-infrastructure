@@ -16,7 +16,7 @@ namespace plotter_project_infrastructure.Controllers
             try
             {
                 var northwndContext = new NorthwndContext();
-                var list = northwndContext.Suppliers.OrderBy(s => s.CompanyName).ToList();
+                var list = northwndContext.Suppliers.OrderBy(s => s.CompanyName).Take(5).ToList();
                 return list;
             }
             catch (Exception ex)

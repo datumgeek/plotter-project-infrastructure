@@ -9,6 +9,8 @@ import { MenuComponent } from './menu/menu.component';
 import { ValuesClient, SuppliersClient } from './api-client';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AgGridModule } from 'ag-grid-angular/main';
+
 import { SuppliersListComponent } from './suppliers-list/suppliers-list.component';
 import { SuppliersGridComponent } from './suppliers-grid/suppliers-grid.component';
 
@@ -23,6 +25,7 @@ import { SuppliersGridComponent } from './suppliers-grid/suppliers-grid.componen
         BrowserModule,
         FormsModule,
         HttpModule,
+        AgGridModule.withComponents([]),
         AppRoutingModule,
         NgbModule.forRoot()
     ],
