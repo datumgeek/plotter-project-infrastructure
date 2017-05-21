@@ -26,18 +26,47 @@ export class SuppliersGridComponent implements AfterViewInit {
 
     getColumns(list: Object[]): ColDef[] {
         var columnDefs: ColDef[] = [];
-        if (list.length > 0) {
+        if (list.length > 0)
+            columnDefs.push({
+                headerName: '#',
+                width: 30,
+                checkboxSelection: (params) =>
+                    params.data.companyName.toLowerCase().startsWith('e'),
+                suppressSorting: true,
+                suppressMenu: true,
+                pinned: true,
+                field: "isChecked"
+            });
+
             for (var prop in list[0]) {
                 switch (typeof list[0][prop]) {
                     case 'function':
                         break;
 
                     default:
-                        columnDefs.push({ headerName: prop, field: prop });
+                        if (prop === 'companyName') {
+                            columnDefs.push({
+                                headerName: prop,
+                                field: prop,
+                                pinned: true,
+                                cellStyle: (params) =>
+                                    params.data.companyName.toLowerCase().startsWith('e') ?
+                                        {
+                                            backgroundColor: 'green',
+                                            color: 'white'
+                                        }
+                                        : {}
+                            });
+                        }
+                        else {
+                            columnDefs.push({
+                                headerName: prop,
+                                field: prop
+                            });
+                        }
                         break;
                 }
             }
-        }
         return columnDefs;
     }
 }

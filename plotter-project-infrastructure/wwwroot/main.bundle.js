@@ -35,15 +35,45 @@ var SuppliersGridComponent = (function () {
     };
     SuppliersGridComponent.prototype.getColumns = function (list) {
         var columnDefs = [];
-        if (list.length > 0) {
-            for (var prop in list[0]) {
-                switch (typeof list[0][prop]) {
-                    case 'function':
-                        break;
-                    default:
-                        columnDefs.push({ headerName: prop, field: prop });
-                        break;
-                }
+        if (list.length > 0)
+            columnDefs.push({
+                headerName: '#',
+                width: 30,
+                checkboxSelection: function (params) {
+                    return params.data.companyName.toLowerCase().startsWith('e');
+                },
+                suppressSorting: true,
+                suppressMenu: true,
+                pinned: true,
+                field: "isChecked"
+            });
+        for (var prop in list[0]) {
+            switch (typeof list[0][prop]) {
+                case 'function':
+                    break;
+                default:
+                    if (prop === 'companyName') {
+                        columnDefs.push({
+                            headerName: prop,
+                            field: prop,
+                            pinned: true,
+                            cellStyle: function (params) {
+                                return params.data.companyName.toLowerCase().startsWith('e') ?
+                                    {
+                                        backgroundColor: 'green',
+                                        color: 'white'
+                                    }
+                                    : {};
+                            }
+                        });
+                    }
+                    else {
+                        columnDefs.push({
+                            headerName: prop,
+                            field: prop
+                        });
+                    }
+                    break;
             }
         }
         return columnDefs;
