@@ -1,11 +1,15 @@
 ﻿<p>
   suppliers-grid works!
 </p>
-    <ag-grid-angular #agGrid 
-                     class="ag-fresh"
-                     style="width: 800px; height: 350px;"
-                     enableColResize
-                     enableSorting
-                     enableFilter
-                     [gridOptions]="gridOptions"
-                     ></ag-grid-angular>
+<ag-grid-angular #agGrid
+                 class="ag-fresh"
+                 style="width: 800px; height: 350px;"
+                 enableColResize
+                 enableSorting
+                 enableFilter
+                 [gridOptions]="gridOptions"
+                 [getRowHeight]="getRowHeight"
+                 [getNodeChildDetails]="getNodeChildDetails"
+                 [fullWidthCellRendererFramework]="getFullWidthCellRenderer()"
+                 [isFullWidthCell]="isFullWidthCell">
+</ag-grid-angular>

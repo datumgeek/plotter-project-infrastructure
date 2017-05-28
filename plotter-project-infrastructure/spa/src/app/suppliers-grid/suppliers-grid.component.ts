@@ -1,6 +1,8 @@
 ﻿import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { SuppliersClient, Suppliers } from '../api-client';
 import { GridOptions, ColDef } from 'ag-grid';
+import { ProductsChildGridComponent } from
+    './products-child-grid/products-child-grid.component';
 
 @Component({
     selector: 'ppi-suppliers-grid',
@@ -22,6 +24,36 @@ export class SuppliersGridComponent implements AfterViewInit {
                 this.gridOptions.api.setColumnDefs(this.getColumns(suppliers));
                 this.gridOptions.api.setRowData(suppliers);
             });
+    }
+
+    public isFullWidthCell(rowNode) {
+        return rowNode.level === 1;
+    }
+
+    public getNodeChildDetails(record: Suppliers) {
+        if (record && record.products && record.products.length > 0) {
+            return {
+                group: true,
+                // the key is used by the default group cellRenderer
+                key: record.companyName,
+                // provide ag-Grid with the children of this group
+                children: [record.products],
+                // for demo, expand rows beginning with 'e'
+                expanded: record.companyName.toLowerCase().startsWith('e')
+            };
+        } else {
+            return null;
+        }
+    }
+
+    public getFullWidthCellRenderer() {
+        return ProductsChildGridComponent;
+    }
+
+    public getRowHeight(params) {
+        var rowIsDetailRow = params.node.level === 1;
+        // return 100 when detail row, otherwise return 25
+        return rowIsDetailRow ? 200 : 25;
     }
 
     getColumns(list: Object[]): ColDef[] {
@@ -49,6 +81,8 @@ export class SuppliersGridComponent implements AfterViewInit {
                                 headerName: prop,
                                 field: prop,
                                 pinned: true,
+                                cellRenderer: 'group',
+                                cellRendererParams: { suppressCount: true },
                                 cellStyle: (params) =>
                                     params.data.companyName.toLowerCase().startsWith('e') ?
                                         {

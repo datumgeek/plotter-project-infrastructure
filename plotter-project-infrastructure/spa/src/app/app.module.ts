@@ -12,20 +12,24 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgGridModule } from 'ag-grid-angular/main';
 
 import { SuppliersListComponent } from './suppliers-list/suppliers-list.component';
-import { SuppliersGridComponent } from './suppliers-grid/suppliers-grid.component';
+import { SuppliersGridComponent } from
+    './suppliers-grid/suppliers-grid.component';
+import { ProductsChildGridComponent } from
+    './suppliers-grid/products-child-grid/products-child-grid.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         MenuComponent,
         SuppliersListComponent,
-        SuppliersGridComponent
+        SuppliersGridComponent,
+        ProductsChildGridComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
         HttpModule,
-        AgGridModule.withComponents([]),
+        AgGridModule.withComponents([ProductsChildGridComponent]),
         AppRoutingModule,
         NgbModule.forRoot()
     ],

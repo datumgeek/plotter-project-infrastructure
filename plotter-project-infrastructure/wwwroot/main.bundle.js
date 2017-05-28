@@ -1,11 +1,65 @@
-webpackJsonp([2,4],{
+webpackJsonp([1,4],{
 
 /***/ 209:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProductsChildGridComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var ProductsChildGridComponent = (function () {
+    function ProductsChildGridComponent() {
+        this.gridOptions = {};
+        this.gridOptions.enableSorting = true;
+        this.gridOptions.enableFilter = true;
+        this.gridOptions.enableColResize = true;
+        this.gridOptions.columnDefs = this.createColumnDefs();
+    }
+    ProductsChildGridComponent.prototype.agInit = function (params) {
+        this.parentRecord = params.node.parent.data;
+    };
+    ProductsChildGridComponent.prototype.ngAfterViewInit = function () {
+        this.gridOptions.api.setRowData(this.parentRecord.products);
+        this.gridOptions.api.sizeColumnsToFit();
+    };
+    ProductsChildGridComponent.prototype.createColumnDefs = function () {
+        return [
+            { headerName: 'ProductId', field: 'productId' },
+            { headerName: 'Name', field: 'productName' },
+            { headerName: 'Q per U', field: 'quantityPerUnit' }
+        ];
+    };
+    return ProductsChildGridComponent;
+}());
+ProductsChildGridComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'ppi-products-child-grid',
+        template: __webpack_require__(377),
+        styles: [__webpack_require__(368)]
+    }),
+    __metadata("design:paramtypes", [])
+], ProductsChildGridComponent);
+
+//# sourceMappingURL=products-child-grid.component.js.map
+
+/***/ }),
+
+/***/ 210:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__api_client__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__products_child_grid_products_child_grid_component__ = __webpack_require__(209);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SuppliersGridComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -16,6 +70,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 var SuppliersGridComponent = (function () {
@@ -32,6 +87,33 @@ var SuppliersGridComponent = (function () {
             _this.gridOptions.api.setColumnDefs(_this.getColumns(suppliers));
             _this.gridOptions.api.setRowData(suppliers);
         });
+    };
+    SuppliersGridComponent.prototype.isFullWidthCell = function (rowNode) {
+        return rowNode.level === 1;
+    };
+    SuppliersGridComponent.prototype.getNodeChildDetails = function (record) {
+        if (record && record.products && record.products.length > 0) {
+            return {
+                group: true,
+                // the key is used by the default group cellRenderer
+                key: record.companyName,
+                // provide ag-Grid with the children of this group
+                children: [record.products],
+                // for demo, expand rows beginning with 'e'
+                expanded: record.companyName.toLowerCase().startsWith('e')
+            };
+        }
+        else {
+            return null;
+        }
+    };
+    SuppliersGridComponent.prototype.getFullWidthCellRenderer = function () {
+        return __WEBPACK_IMPORTED_MODULE_2__products_child_grid_products_child_grid_component__["a" /* ProductsChildGridComponent */];
+    };
+    SuppliersGridComponent.prototype.getRowHeight = function (params) {
+        var rowIsDetailRow = params.node.level === 1;
+        // return 100 when detail row, otherwise return 25
+        return rowIsDetailRow ? 200 : 25;
     };
     SuppliersGridComponent.prototype.getColumns = function (list) {
         var columnDefs = [];
@@ -57,6 +139,8 @@ var SuppliersGridComponent = (function () {
                             headerName: prop,
                             field: prop,
                             pinned: true,
+                            cellRenderer: 'group',
+                            cellRendererParams: { suppressCount: true },
                             cellStyle: function (params) {
                                 return params.data.companyName.toLowerCase().startsWith('e') ?
                                     {
@@ -83,8 +167,8 @@ var SuppliersGridComponent = (function () {
 SuppliersGridComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'ppi-suppliers-grid',
-        template: __webpack_require__(375),
-        styles: [__webpack_require__(367)]
+        template: __webpack_require__(378),
+        styles: [__webpack_require__(369)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__api_client__["b" /* SuppliersClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__api_client__["b" /* SuppliersClient */]) === "function" && _a || Object])
 ], SuppliersGridComponent);
@@ -94,7 +178,7 @@ var _a;
 
 /***/ }),
 
-/***/ 210:
+/***/ 211:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -127,8 +211,8 @@ var SuppliersListComponent = (function () {
 SuppliersListComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'ppi-suppliers-list',
-        template: __webpack_require__(376),
-        styles: [__webpack_require__(368)]
+        template: __webpack_require__(379),
+        styles: [__webpack_require__(370)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__api_client__["b" /* SuppliersClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__api_client__["b" /* SuppliersClient */]) === "function" && _a || Object])
 ], SuppliersListComponent);
@@ -138,7 +222,7 @@ var _a;
 
 /***/ }),
 
-/***/ 271:
+/***/ 272:
 /***/ (function(module, exports) {
 
 function webpackEmptyContext(req) {
@@ -147,20 +231,20 @@ function webpackEmptyContext(req) {
 webpackEmptyContext.keys = function() { return []; };
 webpackEmptyContext.resolve = webpackEmptyContext;
 module.exports = webpackEmptyContext;
-webpackEmptyContext.id = 271;
+webpackEmptyContext.id = 272;
 
 
 /***/ }),
 
-/***/ 272:
+/***/ 273:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(280);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(288);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(290);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(289);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(291);
 
 
 
@@ -173,14 +257,14 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dyna
 
 /***/ }),
 
-/***/ 286:
+/***/ 287:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(281);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__suppliers_list_suppliers_list_component__ = __webpack_require__(210);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__suppliers_grid_suppliers_grid_component__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(282);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__suppliers_list_suppliers_list_component__ = __webpack_require__(211);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__suppliers_grid_suppliers_grid_component__ = __webpack_require__(210);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppRoutingModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -213,7 +297,7 @@ AppRoutingModule = __decorate([
 
 /***/ }),
 
-/***/ 287:
+/***/ 288:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -235,8 +319,8 @@ var AppComponent = (function () {
 AppComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'ppi-root',
-        template: __webpack_require__(373),
-        styles: [__webpack_require__(365)]
+        template: __webpack_require__(375),
+        styles: [__webpack_require__(366)]
     })
 ], AppComponent);
 
@@ -244,7 +328,7 @@ AppComponent = __decorate([
 
 /***/ }),
 
-/***/ 288:
+/***/ 289:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -252,15 +336,16 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(163);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_routing_module__ = __webpack_require__(286);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_component__ = __webpack_require__(287);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__menu_menu_component__ = __webpack_require__(289);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_routing_module__ = __webpack_require__(287);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_component__ = __webpack_require__(288);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__menu_menu_component__ = __webpack_require__(290);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__api_client__ = __webpack_require__(73);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ng_bootstrap_ng_bootstrap__ = __webpack_require__(284);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ag_grid_angular_main__ = __webpack_require__(292);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ng_bootstrap_ng_bootstrap__ = __webpack_require__(285);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ag_grid_angular_main__ = __webpack_require__(293);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ag_grid_angular_main___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_ag_grid_angular_main__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__suppliers_list_suppliers_list_component__ = __webpack_require__(210);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__suppliers_grid_suppliers_grid_component__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__suppliers_list_suppliers_list_component__ = __webpack_require__(211);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__suppliers_grid_suppliers_grid_component__ = __webpack_require__(210);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__suppliers_grid_products_child_grid_products_child_grid_component__ = __webpack_require__(209);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -268,6 +353,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -291,13 +377,14 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_5__app_component__["a" /* AppComponent */],
             __WEBPACK_IMPORTED_MODULE_6__menu_menu_component__["a" /* MenuComponent */],
             __WEBPACK_IMPORTED_MODULE_10__suppliers_list_suppliers_list_component__["a" /* SuppliersListComponent */],
-            __WEBPACK_IMPORTED_MODULE_11__suppliers_grid_suppliers_grid_component__["a" /* SuppliersGridComponent */]
+            __WEBPACK_IMPORTED_MODULE_11__suppliers_grid_suppliers_grid_component__["a" /* SuppliersGridComponent */],
+            __WEBPACK_IMPORTED_MODULE_12__suppliers_grid_products_child_grid_products_child_grid_component__["a" /* ProductsChildGridComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
             __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* HttpModule */],
-            __WEBPACK_IMPORTED_MODULE_9_ag_grid_angular_main__["AgGridModule"].withComponents([]),
+            __WEBPACK_IMPORTED_MODULE_9_ag_grid_angular_main__["AgGridModule"].withComponents([__WEBPACK_IMPORTED_MODULE_12__suppliers_grid_products_child_grid_products_child_grid_component__["a" /* ProductsChildGridComponent */]]),
             __WEBPACK_IMPORTED_MODULE_4__app_routing_module__["a" /* AppRoutingModule */],
             __WEBPACK_IMPORTED_MODULE_8__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */].forRoot()
         ],
@@ -310,7 +397,7 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ 289:
+/***/ 290:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -347,8 +434,8 @@ var MenuComponent = (function () {
 MenuComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'ppi-menu',
-        template: __webpack_require__(374),
-        styles: [__webpack_require__(366)]
+        template: __webpack_require__(376),
+        styles: [__webpack_require__(367)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__api_client__["a" /* ValuesClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__api_client__["a" /* ValuesClient */]) === "function" && _a || Object])
 ], MenuComponent);
@@ -358,7 +445,7 @@ var _a;
 
 /***/ }),
 
-/***/ 290:
+/***/ 291:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -375,28 +462,10 @@ var environment = {
 
 /***/ }),
 
-/***/ 365:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(26)();
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-
 /***/ 366:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(26)();
+exports = module.exports = __webpack_require__(25)();
 // imports
 
 
@@ -414,7 +483,7 @@ module.exports = module.exports.toString();
 /***/ 367:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(26)();
+exports = module.exports = __webpack_require__(25)();
 // imports
 
 
@@ -432,7 +501,7 @@ module.exports = module.exports.toString();
 /***/ 368:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(26)();
+exports = module.exports = __webpack_require__(25)();
 // imports
 
 
@@ -447,38 +516,81 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 373:
-/***/ (function(module, exports) {
+/***/ 369:
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<h1>\n  {{title}}\n</h1>\n<ppi-menu></ppi-menu>\n<router-outlet></router-outlet>\n"
+exports = module.exports = __webpack_require__(25)();
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 374:
-/***/ (function(module, exports) {
+/***/ 370:
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<nav class=\"navbar navbar-toggleable-md navbar-inverse bg-primary\">\r\n  <button class=\"navbar-toggler navbar-toggler-right\" \r\n          type=\"button\" \r\n          (click)=\"isNavbarCollapsed = !isNavbarCollapsed\"\r\n          aria-controls=\"exCollapsingNavbar2\" \r\n          aria-expanded=\"false\" \r\n          aria-label=\"Toggle navigation\">\r\n    <span class=\"navbar-toggler-icon\"></span>\r\n  </button>\r\n  <a class=\"navbar-brand\" \r\n     routerLink=\"/\" \r\n     routerLinkActive=\"active\">Plotter App</a>\r\n  <div [ngbCollapse]=\"isNavbarCollapsed\" \r\n       class=\"collapse navbar-collapse\" \r\n       id=\"exCollapsingNavbar2\">\r\n    <div class=\"navbar-nav mr-auto\">\r\n      <a class=\"nav-item nav-link\" \r\n         href=\"/swagger\" \r\n         target=\"_blank\">Web API</a>\r\n      <a class=\"nav-item nav-link\"\r\n         href=\"/hangfire/jobs/enqueued\"\r\n         target=\"_blank\">Jobs</a>\r\n      <a class=\"nav-item nav-link\" \r\n         routerLink=\"/suppliers-list\" \r\n         routerLinkActive=\"active\"\r\n         href=\"/suppliers-list\">\r\n        Suppliers List</a>\r\n      <a class=\"nav-item nav-link\"\r\n         routerLink=\"/suppliers-grid\"\r\n         routerLinkActive=\"active\"\r\n         href=\"/suppliers-grid\">\r\n        Suppliers Grid\r\n      </a>\r\n    </div>\r\n  </div>\r\n</nav>\r\n\r\n<h2>Web API Test</h2>\r\n<button (click)=\"runTest()\">Run Test</button>\r\n<h3>Job Results</h3>\r\n<p *ngFor=\"let job of jobs\">\r\n  <a \r\n     [href]=\"'/hangfire/jobs/details/' + job\" \r\n     target=\"_blank\">\r\n  Hangfire Job #{{ job }}</a>\r\n</p>\r\n"
+exports = module.exports = __webpack_require__(25)();
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
 
 /***/ }),
 
 /***/ 375:
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  suppliers-grid works!\n</p>\n    <ag-grid-angular #agGrid \r\n                     class=\"ag-fresh\"\r\n                     style=\"width: 800px; height: 350px;\"\r\n                     enableColResize\r\n                     enableSorting\r\n                     enableFilter\r\n                     [gridOptions]=\"gridOptions\"\r\n                     ></ag-grid-angular>\r\n"
+module.exports = "<h1>\n  {{title}}\n</h1>\n<ppi-menu></ppi-menu>\n<router-outlet></router-outlet>\n"
 
 /***/ }),
 
 /***/ 376:
 /***/ (function(module, exports) {
 
+module.exports = "<nav class=\"navbar navbar-toggleable-md navbar-inverse bg-primary\">\r\n  <button class=\"navbar-toggler navbar-toggler-right\" \r\n          type=\"button\" \r\n          (click)=\"isNavbarCollapsed = !isNavbarCollapsed\"\r\n          aria-controls=\"exCollapsingNavbar2\" \r\n          aria-expanded=\"false\" \r\n          aria-label=\"Toggle navigation\">\r\n    <span class=\"navbar-toggler-icon\"></span>\r\n  </button>\r\n  <a class=\"navbar-brand\" \r\n     routerLink=\"/\" \r\n     routerLinkActive=\"active\">Plotter App</a>\r\n  <div [ngbCollapse]=\"isNavbarCollapsed\" \r\n       class=\"collapse navbar-collapse\" \r\n       id=\"exCollapsingNavbar2\">\r\n    <div class=\"navbar-nav mr-auto\">\r\n      <a class=\"nav-item nav-link\" \r\n         href=\"/swagger\" \r\n         target=\"_blank\">Web API</a>\r\n      <a class=\"nav-item nav-link\"\r\n         href=\"/hangfire/jobs/enqueued\"\r\n         target=\"_blank\">Jobs</a>\r\n      <a class=\"nav-item nav-link\" \r\n         routerLink=\"/suppliers-list\" \r\n         routerLinkActive=\"active\"\r\n         href=\"/suppliers-list\">\r\n        Suppliers List</a>\r\n      <a class=\"nav-item nav-link\"\r\n         routerLink=\"/suppliers-grid\"\r\n         routerLinkActive=\"active\"\r\n         href=\"/suppliers-grid\">\r\n        Suppliers Grid\r\n      </a>\r\n    </div>\r\n  </div>\r\n</nav>\r\n\r\n<h2>Web API Test</h2>\r\n<button (click)=\"runTest()\">Run Test</button>\r\n<h3>Job Results</h3>\r\n<p *ngFor=\"let job of jobs\">\r\n  <a \r\n     [href]=\"'/hangfire/jobs/details/' + job\" \r\n     target=\"_blank\">\r\n  Hangfire Job #{{ job }}</a>\r\n</p>\r\n"
+
+/***/ }),
+
+/***/ 377:
+/***/ (function(module, exports) {
+
+module.exports = "<div style=\"width: 100%; height: 100%; position: relative; margin: 25px;\">\r\n  <p>\r\n    products!\r\n  </p>\r\n  <ag-grid-angular style=\"width: 550px; height: 120px\" [gridOptions]=\"gridOptions\"\r\n                   enableSorting\r\n                   enableFilter\r\n                   enableColResize>\r\n  </ag-grid-angular>\r\n</div>\r\n"
+
+/***/ }),
+
+/***/ 378:
+/***/ (function(module, exports) {
+
+module.exports = "<p>\r\n  suppliers-grid works!\r\n</p>\r\n<ag-grid-angular #agGrid\r\n                 class=\"ag-fresh\"\r\n                 style=\"width: 800px; height: 350px;\"\r\n                 enableColResize\r\n                 enableSorting\r\n                 enableFilter\r\n                 [gridOptions]=\"gridOptions\"\r\n                 [getRowHeight]=\"getRowHeight\"\r\n                 [getNodeChildDetails]=\"getNodeChildDetails\"\r\n                 [fullWidthCellRendererFramework]=\"getFullWidthCellRenderer()\"\r\n                 [isFullWidthCell]=\"isFullWidthCell\">\r\n</ag-grid-angular>\r\n"
+
+/***/ }),
+
+/***/ 379:
+/***/ (function(module, exports) {
+
 module.exports = "<p>\n  suppliers-list works!\n</p>\n<div *ngFor=\"let supplier of suppliers\">\n  {{ supplier.companyName }}\n</div>\n"
 
 /***/ }),
 
-/***/ 420:
+/***/ 423:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(272);
+module.exports = __webpack_require__(273);
 
 
 /***/ }),
@@ -487,19 +599,19 @@ module.exports = __webpack_require__(272);
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_add_observable_fromPromise__ = __webpack_require__(381);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_add_observable_fromPromise__ = __webpack_require__(384);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_add_observable_fromPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_add_observable_fromPromise__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_add_observable_of__ = __webpack_require__(382);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_add_observable_of__ = __webpack_require__(385);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_add_observable_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_add_observable_of__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_observable_throw__ = __webpack_require__(383);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_observable_throw__ = __webpack_require__(386);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_observable_throw___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_observable_throw__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(385);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(388);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_toPromise__ = __webpack_require__(387);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_toPromise__ = __webpack_require__(390);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_toPromise__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_mergeMap__ = __webpack_require__(386);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_mergeMap__ = __webpack_require__(389);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_mergeMap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_mergeMap__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(384);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(387);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__);
@@ -1210,5 +1322,5 @@ var _a, _b;
 
 /***/ })
 
-},[420]);
+},[423]);
 //# sourceMappingURL=main.bundle.js.map
