@@ -8,6 +8,56 @@ namespace plotter_project_infrastructure.Controllers
 {
     public static class AgGridUtility
     {
+
+        public static IEnumerable<T> AddSort<T>(IEnumerable<T> collection, string sort)
+        {
+            // if we don't have a sort, just return the collection as it is
+            if (string.IsNullOrWhiteSpace(sort))
+            {
+                return collection;
+            }
+
+            // get ready to start adding sort criteria to the return collection
+            var returnCollection = collection;
+
+            // parse the sort
+            var arr = JArray.Parse(sort);
+
+            var isFirst = true;
+            IOrderedEnumerable<T> sortedCollection = null;
+
+            for (int ii = 0; ii < arr.Count; ii++)
+            {
+                var colId = (string)arr[ii]["colId"];
+                var sortDir = (string)arr[ii]["sort"];
+
+                if (sortDir == "asc")
+                {
+                    if (isFirst)
+                    {
+                        sortedCollection = returnCollection.OrderBy(item => typeof(T).GetProperty(CapitalizeFirstLetter(colId)).GetValue(item));
+                    }
+                    else
+                    {
+                        sortedCollection = sortedCollection.ThenBy(item => typeof(T).GetProperty(CapitalizeFirstLetter(colId)).GetValue(item));
+                    }
+                }
+                else
+                {
+                    if (isFirst)
+                    {
+                        sortedCollection = returnCollection.OrderByDescending(item => typeof(T).GetProperty(CapitalizeFirstLetter(colId)).GetValue(item));
+                    }
+                    else
+                    {
+                        sortedCollection = sortedCollection.ThenByDescending(item => typeof(T).GetProperty(CapitalizeFirstLetter(colId)).GetValue(item));
+                    }
+                }
+            }
+
+            return sortedCollection;
+        }
+
         public static IEnumerable<T> AddFilter<T>(IEnumerable<T> collection, string filter)
         {
             // if we don't have a filter, just return the collection as is
@@ -65,7 +115,7 @@ namespace plotter_project_infrastructure.Controllers
                             if (strings.Count > 0)
                             {
                                 returnCollection = returnCollection
-                                    .Where<T>(item => 
+                                    .Where<T>(item =>
                                     {
                                         var s = (string)typeof(T).GetProperty(jprop.Name).GetValue(item);
                                         return strings.Contains(s);
@@ -104,11 +154,11 @@ namespace plotter_project_infrastructure.Controllers
                         break;
                 }
 
-                
+
             });
 
             returnCollection = returnCollection
-                .Where<T>((item) => 
+                .Where<T>((item) =>
                 {
                     return (double)typeof(T).GetProperty("myprop").GetValue(item) == 45.37;
                 });

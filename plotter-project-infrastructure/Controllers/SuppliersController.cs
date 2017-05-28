@@ -19,7 +19,7 @@ namespace plotter_project_infrastructure.Controllers
                 var northwndContext = new NorthwndContext();
                 var list = northwndContext.Suppliers
                     .OrderBy(s => s.CompanyName)
-                    .Take(5)
+                    //.Take(5)
                     .Include(supplier => supplier.Products)
                     .AsNoTracking()
                     .ToList()

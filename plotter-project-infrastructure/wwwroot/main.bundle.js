@@ -569,7 +569,7 @@ module.exports = "<nav class=\"navbar navbar-toggleable-md navbar-inverse bg-pri
 /***/ 377:
 /***/ (function(module, exports) {
 
-module.exports = "<div style=\"width: 100%; height: 100%; position: relative; margin: 25px;\">\r\n  <p>\r\n    products!\r\n  </p>\r\n  <ag-grid-angular style=\"width: 550px; height: 120px\" [gridOptions]=\"gridOptions\"\r\n                   enableSorting\r\n                   enableFilter\r\n                   enableColResize>\r\n  </ag-grid-angular>\r\n</div>\r\n"
+module.exports = "<div style=\"width: 100%; height: 100%; position: relative; margin: 25px; padding-left: 25px\">\r\n  <p>\r\n    products!\r\n  </p>\r\n  <ag-grid-angular style=\"width: 550px; height: 120px\" [gridOptions]=\"gridOptions\"\r\n                   enableSorting\r\n                   enableFilter\r\n                   enableColResize>\r\n  </ag-grid-angular>\r\n</div>\r\n"
 
 /***/ }),
 

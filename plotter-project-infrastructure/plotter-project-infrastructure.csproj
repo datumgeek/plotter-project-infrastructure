@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <UserSecretsId>4e41ea19-c79a-45f6-9eae-9794fe7f053c</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="spa\node_modules\**" />
