@@ -8,7 +8,6 @@ namespace plotter_project_infrastructure.Controllers
 {
     public static class AgGridUtility
     {
-
         public static IEnumerable<T> AddSort<T>(IEnumerable<T> collection, string sort)
         {
             // if we don't have a sort, just return the collection as it is
@@ -128,11 +127,160 @@ namespace plotter_project_infrastructure.Controllers
                     case JTokenType.Object:
                         var type = (string)prop["type"];
                         var filterItem = prop["filter"];
+                        var filterItemType = filterItem.GetType().ToString();
                         var myProp = CapitalizeFirstLetter(jprop.Name);
 
                         switch (type)
                         {
+                            // number
+                            case "lessThan":
+                                switch (filterItem.Type)
+                                {
+                                    case JTokenType.String:
+                                        returnCollection = returnCollection.Where((item) =>
+                                            String.Compare((string)typeof(T).GetProperty("myProp").GetValue(item), (string)filterItem) < 0);
+                                        break;
+                                    case JTokenType.Float:
+                                        returnCollection = returnCollection.Where((item) =>
+                                            (double)typeof(T).GetProperty("myProp").GetValue(item) < (double)filterItem);
+                                        break;
+                                    case JTokenType.Date:
+                                        returnCollection = returnCollection.Where((item) =>
+                                            (DateTime)typeof(T).GetProperty("myProp").GetValue(item) < (DateTime)filterItem);
+                                        break;
 
+                                    default:
+                                        // todo: log unhandled type
+                                        break;
+                                }
+                                break;
+
+                            case "lessThanOrEqual":
+                                switch (filterItemType)
+                                {
+                                    case "System.String":
+                                        returnCollection = returnCollection.Where((item) =>
+                                            String.Compare((string)typeof(T).GetProperty("myProp").GetValue(item), (string)filterItem) <= 0);
+                                        break;
+                                    case "System.Double":
+                                        returnCollection = returnCollection.Where((item) =>
+                                            (double)typeof(T).GetProperty("myProp").GetValue(item) <= (double)filterItem);
+                                        break;
+                                    case "System.DateTime":
+                                        returnCollection = returnCollection.Where((item) =>
+                                            (DateTime)typeof(T).GetProperty("myProp").GetValue(item) <= (DateTime)filterItem);
+                                        break;
+
+                                    default:
+                                        // todo: log unhandled type
+                                        break;
+                                }
+                                break;
+
+                            case "greaterThan":
+                                switch (filterItemType)
+                                {
+                                    case "System.String":
+                                        returnCollection = returnCollection.Where((item) =>
+                                            String.Compare((string)typeof(T).GetProperty("myProp").GetValue(item), (string)filterItem) > 0);
+                                        break;
+                                    case "System.Double":
+                                        returnCollection = returnCollection.Where((item) =>
+                                            (double)typeof(T).GetProperty("myProp").GetValue(item) > (double)filterItem);
+                                        break;
+                                    case "System.DateTime":
+                                        returnCollection = returnCollection.Where((item) =>
+                                            (DateTime)typeof(T).GetProperty("myProp").GetValue(item) > (DateTime)filterItem);
+                                        break;
+
+                                    default:
+                                        // todo: log unhandled type
+                                        break;
+                                }
+                                break;
+
+                            case "greaterThanOrEqual":
+                                switch (filterItemType)
+                                {
+                                    case "System.String":
+                                        returnCollection = returnCollection.Where((item) =>
+                                            String.Compare((string)typeof(T).GetProperty("myProp").GetValue(item), (string)filterItem) >= 0);
+                                        break;
+                                    case "System.Double":
+                                        returnCollection = returnCollection.Where((item) =>
+                                            (double)typeof(T).GetProperty("myProp").GetValue(item) >= (double)filterItem);
+                                        break;
+                                    case "System.DateTime":
+                                        returnCollection = returnCollection.Where((item) =>
+                                            (DateTime)typeof(T).GetProperty("myProp").GetValue(item) >= (DateTime)filterItem);
+                                        break;
+
+                                    default:
+                                        // todo: log unhandled type
+                                        break;
+                                }
+                                break;
+
+                            // string or number
+                            case "equals":
+                                switch (filterItemType)
+                                {
+                                    case "System.String":
+                                        returnCollection = returnCollection.Where((item) =>
+                                            String.Compare((string)typeof(T).GetProperty("myProp").GetValue(item), (string)filterItem) == 0);
+                                        break;
+                                    case "System.Double":
+                                        returnCollection = returnCollection.Where((item) =>
+                                            (double)typeof(T).GetProperty("myProp").GetValue(item) == (double)filterItem);
+                                        break;
+                                    case "System.DateTime":
+                                        returnCollection = returnCollection.Where((item) =>
+                                            (DateTime)typeof(T).GetProperty("myProp").GetValue(item) == (DateTime)filterItem);
+                                        break;
+
+                                    default:
+                                        // todo: log unhandled type
+                                        break;
+                                }
+                                break;
+
+                            case "notEqual":
+                                switch (filterItemType)
+                                {
+                                    case "System.String":
+                                        returnCollection = returnCollection.Where((item) =>
+                                            String.Compare((string)typeof(T).GetProperty("myProp").GetValue(item), (string)filterItem) != 0);
+                                        break;
+                                    case "System.Double":
+                                        returnCollection = returnCollection.Where((item) =>
+                                            (double)typeof(T).GetProperty("myProp").GetValue(item) != (double)filterItem);
+                                        break;
+                                    case "System.DateTime":
+                                        returnCollection = returnCollection.Where((item) =>
+                                            (DateTime)typeof(T).GetProperty("myProp").GetValue(item) != (DateTime)filterItem);
+                                        break;
+
+                                    default:
+                                        // todo: log unhandled type
+                                        break;
+                                }
+                                break;
+
+                            // string only
+                            case "contains":
+                                returnCollection = returnCollection.Where((item) =>
+                                    ((string)typeof(T).GetProperty("myProp").GetValue(item)).Contains((string)filterItem));
+                                break;
+
+                            case "startsWith":
+                                returnCollection = returnCollection.Where((item) =>
+                                    ((string)typeof(T).GetProperty("myProp").GetValue(item)).StartsWith((string)filterItem));
+                                break;
+
+                            case "endsWith":
+                                returnCollection = returnCollection.Where((item) =>
+                                    ((string)typeof(T).GetProperty("myProp").GetValue(item)).EndsWith((string)filterItem));
+                                break;
                         }
                         break;
 
@@ -156,12 +304,6 @@ namespace plotter_project_infrastructure.Controllers
 
 
             });
-
-            returnCollection = returnCollection
-                .Where<T>((item) =>
-                {
-                    return (double)typeof(T).GetProperty("myprop").GetValue(item) == 45.37;
-                });
 
             return returnCollection;
         }
