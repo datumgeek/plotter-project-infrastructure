@@ -757,6 +757,71 @@ var SuppliersClient = (function () {
         }
         return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].of(null);
     };
+    SuppliersClient.prototype.getAgGridPage = function (sort, filter, take, skip) {
+        var _this = this;
+        var url_ = this.baseUrl + "/api/Suppliers/ag-grid-page?";
+        if (sort === undefined)
+            throw new Error("The parameter 'sort' must be defined.");
+        else
+            url_ += "sort=" + encodeURIComponent("" + sort) + "&";
+        if (filter === undefined)
+            throw new Error("The parameter 'filter' must be defined.");
+        else
+            url_ += "filter=" + encodeURIComponent("" + filter) + "&";
+        if (take === undefined || take === null)
+            throw new Error("The parameter 'take' must be defined and cannot be null.");
+        else
+            url_ += "take=" + encodeURIComponent("" + take) + "&";
+        if (skip === undefined || skip === null)
+            throw new Error("The parameter 'skip' must be defined and cannot be null.");
+        else
+            url_ += "skip=" + encodeURIComponent("" + skip) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+        var content_ = "";
+        var options_ = {
+            body: content_,
+            method: "get",
+            headers: new __WEBPACK_IMPORTED_MODULE_9__angular_http__["b" /* Headers */]({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+        return this.http.request(url_, options_).flatMap(function (response_) {
+            return _this.processGetAgGridPage(response_);
+        }).catch(function (response_) {
+            if (response_ instanceof __WEBPACK_IMPORTED_MODULE_9__angular_http__["c" /* Response */]) {
+                try {
+                    return _this.processGetAgGridPage(response_);
+                }
+                catch (e) {
+                    return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].throw(e);
+                }
+            }
+            else
+                return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].throw(response_);
+        });
+    };
+    SuppliersClient.prototype.processGetAgGridPage = function (response) {
+        var status = response.status;
+        if (status === 200) {
+            var responseText = response.text();
+            var result200 = null;
+            var resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (var _i = 0, resultData200_2 = resultData200; _i < resultData200_2.length; _i++) {
+                    var item = resultData200_2[_i];
+                    result200.push(Suppliers.fromJS(item));
+                }
+            }
+            return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].of(result200);
+        }
+        else if (status !== 200 && status !== 204) {
+            var responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].of(null);
+    };
     SuppliersClient.prototype.get = function (id) {
         var _this = this;
         var url_ = this.baseUrl + "/api/Suppliers/{id}";
@@ -939,8 +1004,8 @@ var ValuesClient = (function () {
             var resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
             if (resultData200 && resultData200.constructor === Array) {
                 result200 = [];
-                for (var _i = 0, resultData200_2 = resultData200; _i < resultData200_2.length; _i++) {
-                    var item = resultData200_2[_i];
+                for (var _i = 0, resultData200_3 = resultData200; _i < resultData200_3.length; _i++) {
+                    var item = resultData200_3[_i];
                     result200.push(item);
                 }
             }

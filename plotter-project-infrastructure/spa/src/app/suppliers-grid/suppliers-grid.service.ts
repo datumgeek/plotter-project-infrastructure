@@ -7,15 +7,17 @@ export class SuppliersGridService implements IDatasource {
 
     public rowCount?: number = -1;
     public filterModel: any = {};
+    public sortModel: any = {};
     public gridApi: GridApi = null;
 
-    constructor() { }
+    constructor(private suppliersClient: SuppliersClient) { }
 
     getRows(params: IGetRowsParams): void {
         // capture the most recent fetch's filter
         this.filterModel = params.filterModel;
+        this.sortModel = params.sortModel;
 
         // fetch the data
-
+        
     }
 }

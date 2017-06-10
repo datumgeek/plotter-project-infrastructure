@@ -3,7 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using plotter_project_infrastructure.NorthwndDomain;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Reflection;
+using System.Net.Http.Headers;
+using System.Net;
 
 namespace plotter_project_infrastructure.Controllers
 {
@@ -31,6 +37,52 @@ namespace plotter_project_infrastructure.Controllers
                 var ex2 = ex;
                 return new List<Suppliers>();
             }
+        }
+
+        // GET api/suppliers
+        [HttpGet("suppliers.csv")]
+        [Produces("text/csv")]
+        public IActionResult GetExportCsv()
+        {
+
+            var list = Get().ToList();
+            var supplierType = typeof(Suppliers);
+            var supplierProperties = supplierType.GetProperties();
+
+            string s = GetSupplierCsvString(list, supplierProperties);
+            return Ok(s);
+        }
+
+        private static string GetSupplierCsvString(List<Suppliers> list, PropertyInfo[] supplierProperties)
+        {
+            StringBuilder sb = new StringBuilder();
+            if (list.Count > 0)
+            {
+                sb.AppendLine(string.Join(", ", supplierProperties.Select(prop => prop.Name).ToArray()));
+                list.ForEach(supplier =>
+                {
+                    sb.AppendLine(string.Join(", ",
+                        supplierProperties.Select(prop =>
+                        {
+                            if (prop.GetValue(supplier) == null)
+                            {
+                                return "";
+                            }
+
+                            switch (prop.GetType().ToString())
+                            {
+                                case "System.String":
+                                case "System.DateTime":
+                                    return $"\"{prop.GetValue(supplier).ToString()}\"";
+
+                                default:
+                                    return prop.GetValue(supplier).ToString();
+                            }
+                        })));
+                });
+            }
+            var s = sb.ToString();
+            return s;
         }
 
         // GET api/suppliers

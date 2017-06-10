@@ -22,6 +22,7 @@ export const API_BASE_URL = new OpaqueToken('API_BASE_URL');
 export interface ISuppliersClient {
     getAll(): Observable<Suppliers[] | null>;
     post(supplier: Suppliers): Observable<void>;
+    getAgGridPage(sort: string, filter: string, take: number, skip: number): Observable<Suppliers[] | null>;
     get(id: number): Observable<Suppliers | null>;
     put(id: number, supplier: Suppliers): Observable<void>;
     delete(id: number): Observable<void>;
@@ -127,6 +128,71 @@ export class SuppliersClient implements ISuppliersClient {
             return throwException("An unexpected server error occurred.", status, responseText);
         }
         return Observable.of<void>(<any>null);
+    }
+
+    getAgGridPage(sort: string, filter: string, take: number, skip: number): Observable<Suppliers[] | null> {
+        let url_ = this.baseUrl + "/api/Suppliers/ag-grid-page?";
+        if (sort === undefined)
+            throw new Error("The parameter 'sort' must be defined.");
+        else
+            url_ += "sort=" + encodeURIComponent("" + sort) + "&"; 
+        if (filter === undefined)
+            throw new Error("The parameter 'filter' must be defined.");
+        else
+            url_ += "filter=" + encodeURIComponent("" + filter) + "&"; 
+        if (take === undefined || take === null)
+            throw new Error("The parameter 'take' must be defined and cannot be null.");
+        else
+            url_ += "take=" + encodeURIComponent("" + take) + "&"; 
+        if (skip === undefined || skip === null)
+            throw new Error("The parameter 'skip' must be defined and cannot be null.");
+        else
+            url_ += "skip=" + encodeURIComponent("" + skip) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = "";
+        
+        let options_ = {
+            body: content_,
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8", 
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processGetAgGridPage(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGetAgGridPage(response_);
+                } catch (e) {
+                    return <Observable<Suppliers[]>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<Suppliers[]>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetAgGridPage(response: Response): Observable<Suppliers[] | null> {
+        const status = response.status; 
+
+        if (status === 200) {
+            const responseText = response.text();
+            let result200: Suppliers[] | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(Suppliers.fromJS(item));
+            }
+            return Observable.of(result200);
+        } else if (status !== 200 && status !== 204) {
+            const responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return Observable.of<Suppliers[] | null>(<any>null);
     }
 
     get(id: number): Observable<Suppliers | null> {
