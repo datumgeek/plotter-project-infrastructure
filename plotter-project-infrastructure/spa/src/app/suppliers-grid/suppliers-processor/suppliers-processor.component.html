@@ -1,0 +1,10 @@
+﻿<!-- run button -->
+<i *ngIf="!isProcessing" 
+   class="fa fa-play-circle" 
+   (click)="runProcess()"></i>
+<!-- spinner -->
+<i *ngIf="isProcessing" 
+   class="fa fa-spinner fa-spin" 
+   (click)="suppliersGrid.showSpinAlert()"></i>
+<!-- message -->
+<span *ngIf="isProcessing">{{ message }}</span>

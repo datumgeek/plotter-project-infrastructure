@@ -16,6 +16,7 @@ import { SuppliersGridComponent } from
     './suppliers-grid/suppliers-grid.component';
 import { ProductsChildGridComponent } from
     './suppliers-grid/products-child-grid/products-child-grid.component';
+import { SuppliersProcessorComponent } from './suppliers-grid/suppliers-processor/suppliers-processor.component';
 
 @NgModule({
     declarations: [
@@ -23,13 +24,16 @@ import { ProductsChildGridComponent } from
         MenuComponent,
         SuppliersListComponent,
         SuppliersGridComponent,
-        ProductsChildGridComponent
+        ProductsChildGridComponent,
+        SuppliersProcessorComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
         HttpModule,
-        AgGridModule.withComponents([ProductsChildGridComponent]),
+        AgGridModule.withComponents([
+            ProductsChildGridComponent,
+            SuppliersProcessorComponent]),
         AppRoutingModule,
         NgbModule.forRoot()
     ],

@@ -60,6 +60,7 @@ ProductsChildGridComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__api_client__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__products_child_grid_products_child_grid_component__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__suppliers_processor_suppliers_processor_component__ = __webpack_require__(426);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SuppliersGridComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -73,12 +74,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var SuppliersGridComponent = (function () {
     function SuppliersGridComponent(suppliersClient) {
         this.suppliersClient = suppliersClient;
         this.suppliers = [];
-        this.gridOptions = {};
+        this.gridOptions = { context: this };
     }
+    SuppliersGridComponent.prototype.showSpinAlert = function () {
+        alert('spin alert !! :)');
+    };
     SuppliersGridComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
         this.suppliersClient.getAll()
@@ -129,6 +134,12 @@ var SuppliersGridComponent = (function () {
                 pinned: true,
                 field: "isChecked"
             });
+        columnDefs.push({
+            headerName: 'Supplier Processor',
+            cellRendererFramework: __WEBPACK_IMPORTED_MODULE_3__suppliers_processor_suppliers_processor_component__["a" /* SuppliersProcessorComponent */],
+            width: 200,
+            pinned: true
+        });
         for (var prop in list[0]) {
             switch (typeof list[0][prop]) {
                 case 'function':
@@ -346,6 +357,7 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__suppliers_list_suppliers_list_component__ = __webpack_require__(211);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__suppliers_grid_suppliers_grid_component__ = __webpack_require__(210);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__suppliers_grid_products_child_grid_products_child_grid_component__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__suppliers_grid_suppliers_processor_suppliers_processor_component__ = __webpack_require__(426);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -353,6 +365,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -378,13 +391,17 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_6__menu_menu_component__["a" /* MenuComponent */],
             __WEBPACK_IMPORTED_MODULE_10__suppliers_list_suppliers_list_component__["a" /* SuppliersListComponent */],
             __WEBPACK_IMPORTED_MODULE_11__suppliers_grid_suppliers_grid_component__["a" /* SuppliersGridComponent */],
-            __WEBPACK_IMPORTED_MODULE_12__suppliers_grid_products_child_grid_products_child_grid_component__["a" /* ProductsChildGridComponent */]
+            __WEBPACK_IMPORTED_MODULE_12__suppliers_grid_products_child_grid_products_child_grid_component__["a" /* ProductsChildGridComponent */],
+            __WEBPACK_IMPORTED_MODULE_13__suppliers_grid_suppliers_processor_suppliers_processor_component__["a" /* SuppliersProcessorComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
             __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* HttpModule */],
-            __WEBPACK_IMPORTED_MODULE_9_ag_grid_angular_main__["AgGridModule"].withComponents([__WEBPACK_IMPORTED_MODULE_12__suppliers_grid_products_child_grid_products_child_grid_component__["a" /* ProductsChildGridComponent */]]),
+            __WEBPACK_IMPORTED_MODULE_9_ag_grid_angular_main__["AgGridModule"].withComponents([
+                __WEBPACK_IMPORTED_MODULE_12__suppliers_grid_products_child_grid_products_child_grid_component__["a" /* ProductsChildGridComponent */],
+                __WEBPACK_IMPORTED_MODULE_13__suppliers_grid_suppliers_processor_suppliers_processor_component__["a" /* SuppliersProcessorComponent */]
+            ]),
             __WEBPACK_IMPORTED_MODULE_4__app_routing_module__["a" /* AppRoutingModule */],
             __WEBPACK_IMPORTED_MODULE_8__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */].forRoot()
         ],
@@ -592,6 +609,90 @@ module.exports = "<p>\n  suppliers-list works!\n</p>\n<div *ngFor=\"let supplier
 
 module.exports = __webpack_require__(273);
 
+
+/***/ }),
+
+/***/ 426:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SuppliersProcessorComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var SuppliersProcessorComponent = (function () {
+    function SuppliersProcessorComponent() {
+        this.isProcessing = false;
+        this.message = "";
+        this.processCount = 0;
+    }
+    SuppliersProcessorComponent.prototype.runProcess = function () {
+        this.isProcessing = true;
+        this.processCount = 0;
+        this.message = 'queuing process...';
+        this.loop();
+    };
+    SuppliersProcessorComponent.prototype.loop = function () {
+        var _this = this;
+        this.processCount++;
+        if (this.processCount > 5) {
+            this.isProcessing = false;
+            return;
+        }
+        this.message = "running step " + this.processCount;
+        setTimeout(function () { _this.loop(); }, 1000);
+    };
+    SuppliersProcessorComponent.prototype.agInit = function (params) {
+        if (params && params.node) {
+            this.supplier = params.node.data;
+            this.suppliersGrid = params.context;
+        }
+    };
+    return SuppliersProcessorComponent;
+}());
+SuppliersProcessorComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'ppi-suppliers-processor',
+        template: __webpack_require__(428),
+        styles: [__webpack_require__(427)]
+    }),
+    __metadata("design:paramtypes", [])
+], SuppliersProcessorComponent);
+
+//# sourceMappingURL=suppliers-processor.component.js.map
+
+/***/ }),
+
+/***/ 427:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(25)();
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ 428:
+/***/ (function(module, exports) {
+
+module.exports = "<!-- run button -->\r\n<i *ngIf=\"!isProcessing\" class=\"fa fa-play-circle\" (click)=\"runProcess()\"></i>\r\n<!-- spinner -->\r\n<i *ngIf=\"isProcessing\" class=\"fa fa-spinner fa-spin\" (click)=\"suppliersGrid.showSpinAlert()\"></i>\r\n<!-- message -->\r\n<span *ngIf=\"isProcessing\">{{ message }}</span>"
 
 /***/ }),
 

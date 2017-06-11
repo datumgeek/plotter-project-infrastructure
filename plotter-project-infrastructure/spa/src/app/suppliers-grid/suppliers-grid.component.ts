@@ -3,6 +3,8 @@ import { SuppliersClient, Suppliers } from '../api-client';
 import { GridOptions, ColDef } from 'ag-grid';
 import { ProductsChildGridComponent } from
     './products-child-grid/products-child-grid.component';
+import { SuppliersProcessorComponent } from
+    './suppliers-processor/suppliers-processor.component';
 
 @Component({
     selector: 'ppi-suppliers-grid',
@@ -14,7 +16,11 @@ export class SuppliersGridComponent implements AfterViewInit {
     private gridOptions: GridOptions;
 
     constructor(private suppliersClient: SuppliersClient) {
-        this.gridOptions = {};
+        this.gridOptions = { context: this };
+    }
+
+    showSpinAlert() {
+        alert('spin alert !! :)');
     }
 
     ngAfterViewInit() {
@@ -69,6 +75,13 @@ export class SuppliersGridComponent implements AfterViewInit {
                 pinned: true,
                 field: "isChecked"
             });
+
+        columnDefs.push({
+            headerName: 'Supplier Processor',
+            cellRendererFramework: SuppliersProcessorComponent,
+            width: 200,
+            pinned: true
+        });
 
             for (var prop in list[0]) {
                 switch (typeof list[0][prop]) {
