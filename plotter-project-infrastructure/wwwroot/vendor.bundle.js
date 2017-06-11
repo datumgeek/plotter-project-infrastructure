@@ -38072,10 +38072,10 @@ exports.PopupService = PopupService;
 /* unused harmony export EventManager */
 /* unused harmony export HAMMER_GESTURE_CONFIG */
 /* unused harmony export HammerGestureConfig */
-/* unused harmony export DomSanitizer */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return DomSanitizer; });
 /* unused harmony export VERSION */
 /* unused harmony export ɵBROWSER_SANITIZATION_PROVIDERS */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return INTERNAL_BROWSER_PLATFORM_PROVIDERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return INTERNAL_BROWSER_PLATFORM_PROVIDERS; });
 /* unused harmony export ɵinitDomAdapter */
 /* unused harmony export ɵBrowserDomAdapter */
 /* unused harmony export ɵsetValueOnPath */
@@ -91244,7 +91244,7 @@ ResourceLoaderImpl.ctorParameters = function () { return []; };
  * found in the LICENSE file at https://angular.io/license
  */
 var INTERNAL_BROWSER_DYNAMIC_PLATFORM_PROVIDERS = [
-    __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser__["c" /* ɵINTERNAL_BROWSER_PLATFORM_PROVIDERS */],
+    __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser__["d" /* ɵINTERNAL_BROWSER_PLATFORM_PROVIDERS */],
     {
         provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["COMPILER_OPTIONS"],
         useValue: { providers: [{ provide: __WEBPACK_IMPORTED_MODULE_0__angular_compiler__["a" /* ResourceLoader */], useClass: ResourceLoaderImpl }] },

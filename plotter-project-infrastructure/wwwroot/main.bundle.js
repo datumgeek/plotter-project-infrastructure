@@ -58,9 +58,10 @@ ProductsChildGridComponent = __decorate([
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__api_client__ = __webpack_require__(73);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__products_child_grid_products_child_grid_component__ = __webpack_require__(209);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__suppliers_processor_suppliers_processor_component__ = __webpack_require__(426);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__api_client__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__products_child_grid_products_child_grid_component__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__suppliers_processor_suppliers_processor_component__ = __webpack_require__(426);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SuppliersGridComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -75,17 +76,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var SuppliersGridComponent = (function () {
-    function SuppliersGridComponent(suppliersClient) {
+    function SuppliersGridComponent(suppliersClient, sanitizer) {
         this.suppliersClient = suppliersClient;
+        this.sanitizer = sanitizer;
         this.suppliers = [];
         this.gridOptions = { context: this };
     }
     SuppliersGridComponent.prototype.showSpinAlert = function () {
         alert('spin alert !! :)');
     };
+    SuppliersGridComponent.prototype.sanitize = function (url) {
+        return this.sanitizer.bypassSecurityTrustUrl(url);
+    };
     SuppliersGridComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
+        setTimeout(function () {
+            var headerString = 'Contact Name, Company Name';
+            var rowString = _this.suppliers
+                .map(function (supplier) {
+                return supplier.contactName + ", " + supplier.companyName;
+            })
+                .join("\r\n");
+            var file = new Blob([headerString.concat('\r\n').concat(rowString)], {
+                type: "application/csv"
+            });
+            _this.downloadUrl = _this.sanitize(URL.createObjectURL(file));
+        }, 5000);
         this.suppliersClient.getAll()
             .subscribe(function (suppliers) {
             _this.suppliers = suppliers;
@@ -113,7 +131,7 @@ var SuppliersGridComponent = (function () {
         }
     };
     SuppliersGridComponent.prototype.getFullWidthCellRenderer = function () {
-        return __WEBPACK_IMPORTED_MODULE_2__products_child_grid_products_child_grid_component__["a" /* ProductsChildGridComponent */];
+        return __WEBPACK_IMPORTED_MODULE_3__products_child_grid_products_child_grid_component__["a" /* ProductsChildGridComponent */];
     };
     SuppliersGridComponent.prototype.getRowHeight = function (params) {
         var rowIsDetailRow = params.node.level === 1;
@@ -136,7 +154,7 @@ var SuppliersGridComponent = (function () {
             });
         columnDefs.push({
             headerName: 'Supplier Processor',
-            cellRendererFramework: __WEBPACK_IMPORTED_MODULE_3__suppliers_processor_suppliers_processor_component__["a" /* SuppliersProcessorComponent */],
+            cellRendererFramework: __WEBPACK_IMPORTED_MODULE_4__suppliers_processor_suppliers_processor_component__["a" /* SuppliersProcessorComponent */],
             width: 200,
             pinned: true
         });
@@ -181,10 +199,10 @@ SuppliersGridComponent = __decorate([
         template: __webpack_require__(378),
         styles: [__webpack_require__(369)]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__api_client__["b" /* SuppliersClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__api_client__["b" /* SuppliersClient */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__api_client__["b" /* SuppliersClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__api_client__["b" /* SuppliersClient */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["c" /* DomSanitizer */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["c" /* DomSanitizer */]) === "function" && _b || Object])
 ], SuppliersGridComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=suppliers-grid.component.js.map
 
 /***/ }),
@@ -593,7 +611,7 @@ module.exports = "<div style=\"width: 100%; height: 100%; position: relative; ma
 /***/ 378:
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  suppliers-grid works!\r\n</p>\r\n<ag-grid-angular #agGrid\r\n                 class=\"ag-fresh\"\r\n                 style=\"width: 800px; height: 350px;\"\r\n                 enableColResize\r\n                 enableSorting\r\n                 enableFilter\r\n                 [gridOptions]=\"gridOptions\"\r\n                 [getRowHeight]=\"getRowHeight\"\r\n                 [getNodeChildDetails]=\"getNodeChildDetails\"\r\n                 [fullWidthCellRendererFramework]=\"getFullWidthCellRenderer()\"\r\n                 [isFullWidthCell]=\"isFullWidthCell\">\r\n</ag-grid-angular>\r\n"
+module.exports = "<h1>\r\n  \r\n  <span *ngIf=\"!downloadUrl\"><i class=\"fa fa-spinner fa-spin\"></i>  Calculating...</span>\r\n  <a *ngIf=\"downloadUrl\" [href]=\"downloadUrl\" target=\"_blank\" download=\"Suppliers.csv\">\r\n    Download >>> <i class=\"fa fa-download\"></i>\r\n  </a>\r\n</h1>\r\n<ag-grid-angular #agGrid\r\n                 class=\"ag-fresh\"\r\n                 style=\"width: 800px; height: 350px;\"\r\n                 enableColResize\r\n                 enableSorting\r\n                 enableFilter\r\n                 [gridOptions]=\"gridOptions\"\r\n                 [getRowHeight]=\"getRowHeight\"\r\n                 [getNodeChildDetails]=\"getNodeChildDetails\"\r\n                 [fullWidthCellRendererFramework]=\"getFullWidthCellRenderer()\"\r\n                 [isFullWidthCell]=\"isFullWidthCell\">\r\n</ag-grid-angular>\r\n"
 
 /***/ }),
 

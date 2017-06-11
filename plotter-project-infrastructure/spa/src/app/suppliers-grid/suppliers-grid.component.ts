@@ -1,4 +1,5 @@
 ﻿import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { SuppliersClient, Suppliers } from '../api-client';
 import { GridOptions, ColDef } from 'ag-grid';
 import { ProductsChildGridComponent } from
@@ -14,8 +15,12 @@ import { SuppliersProcessorComponent } from
 export class SuppliersGridComponent implements AfterViewInit {
     public suppliers: Suppliers[] = [];
     private gridOptions: GridOptions;
+    downloadUrl: any;
 
-    constructor(private suppliersClient: SuppliersClient) {
+    constructor(
+        private suppliersClient: SuppliersClient,
+        private sanitizer: DomSanitizer
+    ) {
         this.gridOptions = { context: this };
     }
 
@@ -23,7 +28,23 @@ export class SuppliersGridComponent implements AfterViewInit {
         alert('spin alert !! :)');
     }
 
+    sanitize(url: string) {
+        return this.sanitizer.bypassSecurityTrustUrl(url);
+    }
+
     ngAfterViewInit() {
+        setTimeout(() => {
+            var headerString = 'Contact Name, Company Name';
+            var rowString = this.suppliers
+                .map(supplier =>
+                    `${supplier.contactName}, ${supplier.companyName}`)
+                .join("\r\n");
+            var file = new Blob([headerString.concat('\r\n').concat(rowString)], {
+                type: "application/csv"
+            });
+            this.downloadUrl = this.sanitize(URL.createObjectURL(file));
+        }, 5000);
+
         this.suppliersClient.getAll()
             .subscribe(suppliers => {
                 this.suppliers = suppliers;

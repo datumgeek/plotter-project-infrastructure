@@ -1,6 +1,9 @@
-﻿<p>
-  suppliers-grid works!
-</p>
+﻿<h1>
+  <span *ngIf="!downloadUrl"><i class="fa fa-spinner fa-spin"></i>  Calculating...</span>
+  <a *ngIf="downloadUrl" [href]="downloadUrl" target="_blank" download="Suppliers.csv">
+    Download >>> <i class="fa fa-download"></i>
+  </a>
+</h1>
 <ag-grid-angular #agGrid
                  class="ag-fresh"
                  style="width: 800px; height: 350px;"
