@@ -692,7 +692,7 @@ module.exports = module.exports.toString();
 /***/ 428:
 /***/ (function(module, exports) {
 
-module.exports = "<!-- run button -->\r\n<i *ngIf=\"!isProcessing\" class=\"fa fa-play-circle\" (click)=\"runProcess()\"></i>\r\n<!-- spinner -->\r\n<i *ngIf=\"isProcessing\" class=\"fa fa-spinner fa-spin\" (click)=\"suppliersGrid.showSpinAlert()\"></i>\r\n<!-- message -->\r\n<span *ngIf=\"isProcessing\">{{ message }}</span>"
+module.exports = "<!-- run button -->\r\n<i *ngIf=\"!isProcessing\" \r\n   class=\"fa fa-play-circle\" \r\n   (click)=\"runProcess()\"></i>\r\n<!-- spinner -->\r\n<i *ngIf=\"isProcessing\" \r\n   class=\"fa fa-spinner fa-spin\" \r\n   (click)=\"suppliersGrid.showSpinAlert()\"></i>\r\n<!-- message -->\r\n<span *ngIf=\"isProcessing\">{{ message }}</span>\r\n"
 
 /***/ }),
 
